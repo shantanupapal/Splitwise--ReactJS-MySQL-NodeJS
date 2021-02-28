@@ -129,14 +129,13 @@
 .leftSideNav {
     /* padding-left: 190px; */
     margin-top: 20px;
-    height: 100%; /* Full-height: remove this if you want "auto" height */
-    width: auto; /* Set the width of the sidebar */
-    position: fixed; /* Fixed Sidebar (stay in place on scroll) */
-    z-index: 1; /* Stay on top */
-    top: 0; /* Stay at the top */
+    height: 100%;
+    width: auto;
+    position: fixed;
+    z-index: 1;
+    top: 0;
     left: 0;
-    /* background-color: #111; Black */
-    overflow-x: hidden; /* Disable horizontal scroll */
+    overflow-x: hidden;
     padding-top: 20px;
 }
 
@@ -149,21 +148,6 @@
     display: block;
 }
 
-/* Style page content */
-.main {
-    margin-left: 160px; /* Same as the width of the sidebar */
-    padding: 0px 10px;
-}
-
-/* On smaller screens, where height is less than 450px, change the style of the sidebar (less padding and a smaller font size) */
-@media screen and (max-height: 450px) {
-    .leftSideNav {
-        padding-top: 15px;
-    }
-    .leftSideNav a {
-        font-size: 18px;
-    }
-}
 .options {
     font-size: 17px;
 }
