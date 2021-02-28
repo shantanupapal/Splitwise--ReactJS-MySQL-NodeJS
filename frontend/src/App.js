@@ -1,12 +1,12 @@
 import { BrowserRouter } from "react-router-dom";
 import "./App.css";
-import LandingPage from "./components/landing/LandingPage";
+import Main from "./Main";
 
 function App() {
     return (
         <BrowserRouter>
             <div className="App">
-                <LandingPage />
+                <Main />
             </div>
         </BrowserRouter>
     );

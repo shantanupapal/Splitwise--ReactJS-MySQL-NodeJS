@@ -4,6 +4,7 @@ import facets from "../../images/facets.jpg";
 import icons from "../../images/icons.png";
 import plane from "../../images/plane.png";
 import { Link } from "react-router-dom";
+import "../../App.css";
 const LandingPage = () => {
     return (
         <div className="landingPage">
@@ -38,8 +39,11 @@ const LandingPage = () => {
                                 with housemates, trips, groups,
                                 <br /> friends, and family.
                             </p>
-                            <Link to="/Signup" className="signup_name">
-                                Sign Up
+                            <Link
+                                to="/Signup"
+                                className="landingPageSignup_name"
+                            >
+                                Sign up
                             </Link>
                             <p style={{ padding: "20px 0px 15px 0px" }}>
                                 Free for iPhone , Android , and web.

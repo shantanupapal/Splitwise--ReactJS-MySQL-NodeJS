@@ -1,3 +1,187 @@
 * {
     margin: 0;
+    font-family: Georgia, "Times New Roman", Times, serif;
+}
+.landingPageNav {
+    background-color: #fff;
+}
+.landingPagenNav_img img {
+    width: 65px;
+    height: 65px;
+}
+
+.nav_name {
+    text-decoration: none;
+    font-size: 20px;
+    color: black;
+}
+
+.landingPageLogin_name {
+    text-decoration: none;
+    font-size: 15px;
+    padding-right: 0.75rem;
+    color: #1cc29f;
+    overflow: hidden;
+}
+
+.landingPageSignup_name {
+    color: #fff;
+    border-radius: 5px;
+    background-color: #1cc29f;
+    cursor: pointer;
+    font-weight: 600;
+    text-decoration: inherit;
+    border: 0 solid;
+    box-sizing: inherit;
+    box-shadow: 0 2px 0 0 rgb(55 59 63 / 50%);
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+    overflow: hidden;
+}
+
+/* MainNavBar */
+.mainNavBar {
+    background-color: #1cc29f;
+}
+
+.mainNav_img img {
+    width: 100px;
+    height: auto;
+}
+
+.mainNavLogin_name {
+    font-size: 15px;
+    color: #fff;
+    border-radius: 5px;
+    background-color: #1cc29f;
+    cursor: pointer;
+    text-decoration: inherit;
+    border: 0 solid;
+    box-sizing: inherit;
+    box-shadow: 1px 1px 1px 1px rgb(55 59 63 / 50%);
+    padding: 0.3rem;
+    overflow: hidden;
+}
+
+.mainNavSignup_name {
+    font-size: 15px;
+    color: #fff;
+    border-radius: 5px;
+    background-color: #ff652f;
+    cursor: pointer;
+    text-decoration: inherit;
+    border: 0 solid;
+    box-sizing: inherit;
+    box-shadow: 1px 1px 1px 1px rgb(55 59 63 / 50%);
+    padding: 0.3rem;
+    overflow: hidden;
+}
+
+.or {
+    padding-left: 7px;
+    padding-right: 7px;
+}
+
+/* --------Login.js--------------- */
+
+.loginMain {
+    margin-top: 200px;
+    font-size: 18px;
+}
+
+.welcomeName {
+    text-transform: uppercase;
+    font-size: 17px;
+    color: #999;
+    font-weight: bold;
+    line-height: 20px;
+}
+
+.forMainLogo img {
+    width: 250px;
+    height: 250px;
+}
+.submitButton {
+    margin-top: 10px;
+    background-color: #ff652f;
+}
+
+.formForLogin {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+/* ---------Sign Up------------- */
+.formForSignup {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.signUpMain {
+    margin-top: 150px;
+    font-size: 18px;
+}
+
+/* Left Side Bar */
+.leftSideNav {
+    padding-left: 190px;
+    margin-top: 20px;
+    height: 100%; /* Full-height: remove this if you want "auto" height */
+    width: auto; /* Set the width of the sidebar */
+    position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+    z-index: 1; /* Stay on top */
+    top: 0; /* Stay at the top */
+    left: 0;
+    /* background-color: #111; Black */
+    overflow-x: hidden; /* Disable horizontal scroll */
+    padding-top: 20px;
+}
+
+/* The navigation menu links */
+.leftSideNav a {
+    padding: 6px 8px 0px 16px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block;
+}
+
+/* Style page content */
+.main {
+    margin-left: 160px; /* Same as the width of the sidebar */
+    padding: 0px 10px;
+}
+
+/* On smaller screens, where height is less than 450px, change the style of the sidebar (less padding and a smaller font size) */
+@media screen and (max-height: 450px) {
+    .leftSideNav {
+        padding-top: 15px;
+    }
+    .leftSideNav a {
+        font-size: 18px;
+    }
+}
+.options {
+    font-size: 17px;
+}
+/* tabel td {
+    vertical-align: baseline;
+} */
+.options img {
+    width: 20px;
+    height: 20px;
+}
+
+.groupHeader {
+    position: relative;
+    margin-left: 5px;
+    background: #f6f6f6;
+    color: #ccc;
+    font-size: 12px;
+    margin-top: 5px;
+    border-top: 1px solid #f3f3f3;
+    border-bottom: 1px solid #eee;
+    padding: 0 5px;
 }
