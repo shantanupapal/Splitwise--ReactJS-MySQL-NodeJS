@@ -7,7 +7,6 @@ const Login = () => {
     return (
         <div>
             <MainNavbar />
-            <LeftSideBar />
             <div className="container h-100 d-flex justify-content-center loginMain">
                 <div className="row align-items-center">
                     <div className="col forMainLogo">
