@@ -1,32 +1,19 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import logo2 from "../../images/logo2.svg";
 import "../../App.css";
-const MainNavbar = () => {
-    return (
-        <nav className="navbar fixed-top mainNavBar">
-            <div className="container-fluid">
-                <div className="container">
-                    <div className="row align-items-center">
-                        <div className="col-12 col-md-10 mainNav_img ">
-                            <Link to="/">
-                                <img src={logo2} alt="" />
-                            </Link>
-                        </div>
-                        <div className="col-6 col-md-2 ">
-                            <Link to="/Login" className="mainNavLogin_name">
-                                <span>Log in</span>
-                            </Link>
-                            <span className="or">or</span>
-                            <Link to="/SignUp" className="mainNavSignup_name">
-                                Sign up
-                            </Link>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </nav>
-    );
+import SignedInNav from "./SignedInNav";
+import SignedOutNav from "./SignedOutNav";
+import { connect } from "react-redux";
+const MainNavbar = (props) => {
+    const { loggedIn } = props;
+    const links = loggedIn ? <SignedInNav /> : <SignedOutNav />; // console.log(loggedIn);
+    return <div>{links}</div>;
 };
 
-export default MainNavbar;
+const mapStateToProps = (state) => {
+    console.log(state);
+    return {
+        loggedIn: state.auth.loggedIn,
+    };
+};
+
+export default connect(mapStateToProps)(MainNavbar);

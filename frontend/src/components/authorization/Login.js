@@ -2,14 +2,17 @@ import MainNavbar from "../layout/MainNavbar";
 import "../../App.css";
 import centerlogo from "../../images/centerlogo.svg";
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { logIn } from "../../store/actions/loginActions";
 
 class Login extends Component {
     state = {
-        email: "",
+        username: "", //email
         password: "",
     };
 
     handleChange = (e) => {
+        // console.log(this.state);
         this.setState({
             [e.target.id]: e.target.value,
         });
@@ -17,9 +20,11 @@ class Login extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
-        console.log(this.state);
+        this.props.logIn(this.state);
     };
     render() {
+        const { authError } = this.props;
+        const { loggedIn } = this.props;
         return (
             <div>
                 <MainNavbar />
@@ -36,9 +41,9 @@ class Login extends Component {
                                 <div className="form-group formForLogin">
                                     <label htmlFor="email">Email address</label>
                                     <input
-                                        type="email"
+                                        type="text"
                                         className="form-control"
-                                        id="email"
+                                        id="username"
                                         onChange={this.handleChange}
                                     />
                                 </div>
@@ -57,6 +62,14 @@ class Login extends Component {
                                 >
                                     Log in
                                 </button>
+                                <div>
+                                    {authError ? <p>{authError}</p> : null}
+                                    {loggedIn ? (
+                                        <p>LoggedIn</p>
+                                    ) : (
+                                        <p>NotLoggedIn</p>
+                                    )}
+                                </div>
                             </form>
                         </div>
                     </div>
@@ -65,5 +78,16 @@ class Login extends Component {
         );
     }
 }
+const mapStateToProps = (state) => {
+    return {
+        authError: state.auth.authError,
+        loggedIn: state.auth.loggedIn,
+    };
+};
 
-export default Login;
+const mapDispatchToProps = (dispatch) => {
+    return {
+        logIn: (credentials) => dispatch(logIn(credentials)),
+    };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

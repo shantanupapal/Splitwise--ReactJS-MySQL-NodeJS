@@ -1,7 +1,9 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import { connect } from "react-redux";
+import { signOut } from "../../store/actions/loginActions";
 import "../../App.css";
-const SignedInNav = () => {
+const SignedInNav = (props) => {
     return (
         <nav className="navbar fixed-top mainNavBar">
             <div className="container-fluid">
@@ -13,9 +15,12 @@ const SignedInNav = () => {
                             </NavLink>
                         </div>
                         <div className="col-6 col-md-2 ">
-                            <NavLink to="/" className="mainNavLogin_name">
+                            <button
+                                onClick={props.signOut}
+                                className="mainNavLogin_name"
+                            >
                                 <span>Log out</span>
-                            </NavLink>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -24,4 +29,12 @@ const SignedInNav = () => {
     );
 };
 
-export default SignedInNav;
+const mapDispatchToProps = (dispatch) => {
+    return {
+        signOut: () => {
+            dispatch(signOut());
+        },
+    };
+};
+
+export default connect(null, mapDispatchToProps)(SignedInNav);
