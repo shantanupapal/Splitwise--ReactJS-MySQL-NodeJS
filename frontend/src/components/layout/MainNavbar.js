@@ -4,8 +4,8 @@ import logo2 from "../../images/logo2.svg";
 import "../../App.css";
 const MainNavbar = () => {
     return (
-        <nav class="navbar fixed-top mainNavBar">
-            <div class="container-fluid">
+        <nav className="navbar fixed-top mainNavBar">
+            <div className="container-fluid">
                 <div className="container">
                     <div className="row align-items-center">
                         <div className="col-12 col-md-10 mainNav_img ">

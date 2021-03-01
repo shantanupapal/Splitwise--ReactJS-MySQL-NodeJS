@@ -4,8 +4,8 @@ import logo from "../../images/logo.png";
 import { Link } from "react-router-dom";
 const Navbar = () => {
     return (
-        <nav class="navbar fixed-top landingPageNav">
-            <div class="container-fluid">
+        <nav className="navbar fixed-top landingPageNav">
+            <div className="container-fluid">
                 <div className="container">
                     <div className="row align-items-center">
                         <div className="col-12 col-md-10 landingPagenNav_img ">

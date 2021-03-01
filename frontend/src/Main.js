@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Route } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import LandingPage from "./components/landing/LandingPage";
 import Login from "./components/authorization/Login";
 import SignUp from "./components/authorization/SignUp";
@@ -10,11 +10,13 @@ class Main extends Component {
     render() {
         return (
             <div>
-                {/*Render Different Component based on Route*/}
-                <Route exact path="/" component={LandingPage} />
-                <Route path="/Login" component={Login} />
-                <Route path="/SignUp" component={SignUp} />
-                <Route path="/Center" component={Center} />
+                <Switch>
+                    {/*Render Different Component based on Route*/}
+                    <Route exact path="/" component={LandingPage} />
+                    <Route path="/Login" component={Login} />
+                    <Route path="/SignUp" component={SignUp} />
+                    <Route path="/Center" component={Center} />
+                </Switch>
             </div>
         );
     }
