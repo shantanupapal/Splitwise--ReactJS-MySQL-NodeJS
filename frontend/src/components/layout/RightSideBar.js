@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 const RightSideBar = () => {
     return (
         <div id="sidebar-wrapper">
-            <ul class="sidebar-nav nav navbar-inverse">
+            <ul className="sidebar-nav nav navbar-inverse">
                 <li>
                     <a href="#">Link 1</a>
                 </li>

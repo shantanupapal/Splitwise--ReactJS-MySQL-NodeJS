@@ -7,8 +7,20 @@ import { createStore, applyMiddleware } from "redux"; // REDUX
 import rootReducer from "./reducers/rootReducer";
 import { Provider } from "react-redux";
 import thunk from "redux-thunk";
+import { composeWithDevTools } from "redux-devtools-extension";
+import { persistStore } from "redux-persist";
+import Localforage from "localforage";
 
-const store = createStore(rootReducer, applyMiddleware(thunk));
+const store = createStore(
+    rootReducer,
+    composeWithDevTools(applyMiddleware(thunk))
+);
+
+// componentWillMount() {
+//     persistStore(store, {}, () => {
+//         this.setState({rehydrated: true})
+//     })
+// }
 
 ReactDOM.render(
     <React.StrictMode>

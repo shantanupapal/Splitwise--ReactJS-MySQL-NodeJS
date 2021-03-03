@@ -2,10 +2,13 @@ import MainNavbar from "../layout/MainNavbar";
 import "../../App.css";
 import centerlogo from "../../images/centerlogo.svg";
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { signUp } from "../../store/actions/loginActions";
+import { Redirect } from "react-router-dom";
 
 class SignUp extends Component {
     state = {
-        username: "",
+        name: "",
         email: "",
         password: "",
     };
@@ -19,8 +22,12 @@ class SignUp extends Component {
     handleSubmit = (e) => {
         e.preventDefault();
         console.log(this.state);
+        this.props.signUp(this.state);
     };
     render() {
+        const { loggedIn } = this.props;
+
+        if (loggedIn) return <Redirect to="/Center" />;
         return (
             <div>
                 <MainNavbar />
@@ -41,7 +48,7 @@ class SignUp extends Component {
                                     <input
                                         type="text"
                                         className="form-control"
-                                        id="username"
+                                        id="name"
                                         onChange={this.handleChange}
                                     />
                                 </div>
@@ -77,5 +84,17 @@ class SignUp extends Component {
         );
     }
 }
+const mapStateToProps = (state) => {
+    return {
+        authError: state.auth.authError,
+        loggedIn: state.auth.loggedIn,
+    };
+};
 
-export default SignUp;
+const mapDispatchToProps = (dispatch) => {
+    return {
+        signUp: (newAccount) => dispatch(signUp(newAccount)),
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignUp);

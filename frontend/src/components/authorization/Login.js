@@ -4,10 +4,11 @@ import centerlogo from "../../images/centerlogo.svg";
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { logIn } from "../../store/actions/loginActions";
+import { Redirect } from "react-router-dom";
 
 class Login extends Component {
     state = {
-        username: "", //email
+        email: "", //email
         password: "",
     };
 
@@ -24,7 +25,15 @@ class Login extends Component {
     };
     render() {
         const { authError } = this.props;
+        // if (authError) {
+        //     this.setState({
+        //         email: "",
+        //         password: "",
+        //     });
+        // }
         const { loggedIn } = this.props;
+
+        if (loggedIn) return <Redirect to="/Center" />;
         return (
             <div>
                 <MainNavbar />
@@ -41,9 +50,9 @@ class Login extends Component {
                                 <div className="form-group formForLogin">
                                     <label htmlFor="email">Email address</label>
                                     <input
-                                        type="text"
+                                        type="email"
                                         className="form-control"
-                                        id="username"
+                                        id="email"
                                         onChange={this.handleChange}
                                     />
                                 </div>
@@ -63,12 +72,12 @@ class Login extends Component {
                                     Log in
                                 </button>
                                 <div>
-                                    {authError ? <p>{authError}</p> : null}
-                                    {loggedIn ? (
-                                        <p>LoggedIn</p>
-                                    ) : (
-                                        <p>NotLoggedIn</p>
-                                    )}
+                                    {authError ? (
+                                        <p className="logInError">
+                                            {authError}
+                                        </p>
+                                    ) : null}
+                                    {loggedIn ? <p>LoggedIn</p> : null}
                                 </div>
                             </form>
                         </div>

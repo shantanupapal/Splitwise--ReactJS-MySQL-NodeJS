@@ -9,15 +9,13 @@ import Center from "./components/Center";
 class Main extends Component {
     render() {
         return (
-            <div>
-                <Switch>
-                    {/*Render Different Component based on Route*/}
-                    <Route exact path="/" component={LandingPage} />
-                    <Route path="/Login" component={Login} />
-                    <Route path="/SignUp" component={SignUp} />
-                    <Route path="/Center" component={Center} />
-                </Switch>
-            </div>
+            <Switch>
+                {/*Render Different Component based on Route*/}
+                <Route exact path="/" component={LandingPage} />
+                <Route path="/Login" component={Login} />
+                <Route path="/SignUp" component={SignUp} />
+                <Route path="/Center" component={Center} />
+            </Switch>
         );
     }
 }
