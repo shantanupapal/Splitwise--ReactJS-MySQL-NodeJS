@@ -97,6 +97,7 @@ app.post("/login", (req, res) => {
                     req.session.user = result;
                     console.log(req.session.user);
                     res.status(200).send(result);
+
                     // res.send(result, { message: "Successful Login" });
                     // res.writeHead(200, {
                     //     "Content-Type": "text/plain",
