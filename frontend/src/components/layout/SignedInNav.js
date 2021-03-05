@@ -4,8 +4,6 @@ import { connect } from "react-redux";
 import { signOut } from "../../store/actions/loginActions";
 import logo2 from "../../images/logo2.svg";
 import "../../App.css";
-import cookie from "react-cookies";
-import { render } from "react-dom";
 
 class SignedInNav extends Component {
     // const username = document.cookie.value;
@@ -28,6 +26,36 @@ class SignedInNav extends Component {
                                 </Link>
                             </div>
                             <div className="col-6 col-md-2 ">
+                                <div
+                                    className="btn-group"
+                                    style={{ display: "inline-block" }}
+                                >
+                                    <button
+                                        class="btn btn-secondary btn-sm dropdown-toggle"
+                                        type="button"
+                                        data-toggle="dropdown"
+                                        aria-haspopup="true"
+                                        aria-expanded="false"
+                                    >
+                                        {user}
+                                    </button>
+                                    <div
+                                        className="dropdown-menu"
+                                        style={{ zIndex: "2" }}
+                                    >
+                                        <ul class="dropdown-menu">
+                                            <li>
+                                                <a href="#">HTML</a>
+                                            </li>
+                                            <li>
+                                                <a href="#">CSS</a>
+                                            </li>
+                                            <li>
+                                                <a href="#">JavaScript</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
                                 <button
                                     onClick={this.props.signOut}
                                     className="mainNavLogin_name"

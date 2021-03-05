@@ -8,8 +8,6 @@ import rootReducer from "./reducers/rootReducer";
 import { Provider } from "react-redux";
 import thunk from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
-import { persistStore } from "redux-persist";
-import Localforage from "localforage";
 
 const store = createStore(
     rootReducer,

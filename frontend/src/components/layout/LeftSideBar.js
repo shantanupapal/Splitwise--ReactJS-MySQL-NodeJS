@@ -44,7 +44,7 @@ const LeftSideBar = () => {
                                     <td>GROUPS</td>
                                     <td>
                                         <Link
-                                            to="/AddNewGroup"
+                                            to="/NewGroup"
                                             style={{
                                                 fontSize: "12px",
                                             }}

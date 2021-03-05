@@ -4,7 +4,6 @@ import LeftSideBar from "./layout/LeftSideBar";
 import MainNavbar from "./layout/MainNavbar";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
-import cookie from "react-cookies";
 
 class Center extends Component {
     render() {

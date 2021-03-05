@@ -87,8 +87,9 @@
 
 /* --------Login.js--------------- */
 
-.loginMain {
-    margin-top: 200px;
+.loginMain,
+.addGroupMain {
+    margin-top: 180px;
     font-size: 18px;
 }
 
@@ -101,15 +102,16 @@
 }
 
 .forMainLogo img {
-    width: 250px;
-    height: 250px;
+    width: 200px;
+    height: 200px;
 }
 .submitButton {
     margin-top: 10px;
     background-color: #ff652f;
 }
 
-.formForLogin {
+.formForLogin,
+.formForNewGroup {
     margin-top: 20px;
     margin-bottom: 20px;
 }
@@ -194,4 +196,24 @@
     position: relative;
     background: #eee;
     justify-content: center;
+}
+
+/*------------Add Group ----------------*/
+.hrTagAddGroup {
+    margin: 18px 0;
+    border: 0;
+    border-top: 1px solid #9c9c9c;
+    border-bottom: 1px solid #ffffff;
+    margin-top: -10px;
+    display: block;
+    unicode-bidi: isolate;
+    margin-block-start: 0.5em;
+    margin-block-end: 0.5em;
+    margin-inline-start: auto;
+    margin-inline-end: auto;
+    overflow: hidden;
+}
+
+.addPersonRow {
+    margin-bottom: 50px;
 }

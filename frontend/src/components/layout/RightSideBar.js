@@ -1,9 +1,8 @@
-import { Link } from "react-router-dom";
 const RightSideBar = () => {
     return (
         <div id="sidebar-wrapper">
             <ul className="sidebar-nav nav navbar-inverse">
-                <li>
+                {/*  <li>
                     <a href="#">Link 1</a>
                 </li>
                 <li>
@@ -11,7 +10,7 @@ const RightSideBar = () => {
                 </li>
                 <li>
                     <a href="#">Link 2</a>
-                </li>
+                </li>*/}
             </ul>
         </div>
     );
