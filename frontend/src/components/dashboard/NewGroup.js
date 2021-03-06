@@ -4,10 +4,13 @@ import "../../App.css";
 import centerlogo from "../../images/centerlogo.svg";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
+import backServer from "../../webConfig";
+import Axios from "axios";
 
 class NewGroup extends Component {
     state = {
         groupName: "",
+        groupCreator: this.props.user,
         groupMembers: [{ groupMember: null }],
     };
 
@@ -28,29 +31,51 @@ class NewGroup extends Component {
     //     ));
     // }
 
-    handleChange(i, event) {
+    handleChange = (i, event) => {
         let groupMembers = [...this.state.groupMembers];
         groupMembers[i].groupMember = event.target.value;
-        this.setState({ groupMembers });
-        console.log(groupMembers);
-    }
+        this.setState({ ...this.state, groupMembers });
+        console.log(this.state);
+    };
 
-    addOnClick() {
+    addOnClick = () => {
         this.setState((prevState) => ({
+            ...this.state,
             groupMembers: [...prevState.groupMembers, { groupMember: null }],
         }));
-    }
+    };
 
-    removeOnClick(i) {
+    removeOnClick = (i) => {
         let groupMembers = [...this.state.groupMembers];
         groupMembers.splice(i, 1);
-        this.setState({ groupMembers });
-    }
+        this.setState({ ...this.state, groupMembers });
+    };
 
-    handleSubmit(event) {
-        alert("A name was submitted: " + this.state.groupMembers.join(", "));
+    handleSubmit = (event) => {
         event.preventDefault();
-    }
+        Axios.defaults.withCredentials = true;
+
+        // let groupMembers = [...this.state.groupMembers];
+        // groupMembers.push(this.props.user);
+        // this.setState({
+        //     ...this.state,
+        //     groupMembers,
+        // });
+        // console.log("here: ", this.state);
+        const groupDetails = this.state;
+
+        Axios.post(`${backServer}/newgroup`, {
+            groupDetails,
+        })
+            .then((response) => {
+                console.log(response.status);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+
+        // alert("A name was submitted: " + this.state.groupMembers.join(", "));
+    };
 
     render() {
         const { user } = this.props;

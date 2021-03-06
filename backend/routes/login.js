@@ -28,10 +28,11 @@ router.post("/", (req, res) => {
                     (error, response) => {
                         if (response) {
                             res.cookie("cookie", result[0].name, {
-                                maxAge: 900000,
+                                maxAge: 90000000,
                                 httpOnly: false,
                                 path: "/",
                             });
+                            console.log("RESULT: ", result);
                             req.session.user = result;
                             console.log(req.session.user);
                             res.status(200).send(result);
