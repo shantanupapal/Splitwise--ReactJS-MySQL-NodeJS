@@ -42,6 +42,16 @@
 }
 
 /* MainNavBar */
+
+.userNameNavBar {
+    padding: 8px 5px 5px;
+    color: #fff;
+    float: none;
+    line-height: 19px;
+    text-decoration: none;
+    text-shadow: 0 -1px 0 rgb(0 0 0 / 25%);
+    margin-right: 15px;
+}
 .mainNavBar {
     background-color: #1cc29f;
 }
@@ -215,5 +225,15 @@
 }
 
 .addPersonRow {
-    margin-bottom: 50px;
+    position: relative;
+    display: block;
+    font-size: 14px;
+    line-height: 18px;
+    margin-top: 10px;
+}
+
+/*----------Profile Page---------*/
+.profileMain {
+    padding-top: 100px;
+    font-size: 12px;
 }

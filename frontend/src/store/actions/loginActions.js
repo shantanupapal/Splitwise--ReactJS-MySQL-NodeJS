@@ -1,9 +1,11 @@
 import Axios from "axios";
 import cookie from "react-cookies";
+import backServer from "../../webConfig";
+
 export const logIn = (credentials) => {
     Axios.defaults.withCredentials = true;
     return (dispatch, getState) => {
-        Axios.post("http://localhost:3001/login", {
+        Axios.post(`${backServer}/login`, {
             email: credentials.email,
             password: credentials.password,
         })
@@ -19,12 +21,6 @@ export const logIn = (credentials) => {
                 if (response.status === 201) {
                     dispatch({ type: "LOGIN_NOT_SUCCESS" });
                 }
-
-                // if (response.data.message) {
-                //     setLoginStatus(response.data.message);
-                // } else {
-                //     setLoginStatus(response.data[0].username);
-                // }
             })
             .catch((err) => {
                 dispatch({ type: "LOGIN_ERROR", err });
@@ -34,7 +30,7 @@ export const logIn = (credentials) => {
 
 export const signOut = () => {
     return (dispatch, getState) => {
-        Axios.get("http://localhost:3001/logout").then((response) => {
+        Axios.get(`${backServer}/logout`).then((response) => {
             if (response.status === 200) {
                 cookie.remove("cookie", { path: "/" });
                 dispatch({ type: "SIGNOUT_SUCCESS" });
@@ -46,7 +42,7 @@ export const signOut = () => {
 export const signUp = (newAccount) => {
     Axios.defaults.withCredentials = true;
     return (dispatch, getState) => {
-        Axios.post("http://localhost:3001/signup", {
+        Axios.post(`${backServer}/signup`, {
             name: newAccount.name,
             email: newAccount.email,
             password: newAccount.password,

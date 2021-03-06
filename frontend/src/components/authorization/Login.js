@@ -8,12 +8,11 @@ import { Redirect } from "react-router-dom";
 
 class Login extends Component {
     state = {
-        email: "", //email
+        email: "",
         password: "",
     };
 
     handleChange = (e) => {
-        // console.log(this.state);
         this.setState({
             [e.target.id]: e.target.value,
         });
@@ -25,12 +24,6 @@ class Login extends Component {
     };
     render() {
         const { authError } = this.props;
-        // if (authError) {
-        //     this.setState({
-        //         email: "",
-        //         password: "",
-        //     });
-        // }
         const { loggedIn } = this.props;
 
         if (loggedIn) return <Redirect to="/Center" />;

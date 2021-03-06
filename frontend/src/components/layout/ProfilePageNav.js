@@ -5,7 +5,7 @@ import { signOut } from "../../store/actions/loginActions";
 import logo2 from "../../images/logo2.svg";
 import "../../App.css";
 
-class SignedInNav extends Component {
+class ProfilePageNav extends Component {
     // const username = document.cookie.value;
     // console.log("USER:");
     // console.log(username);
@@ -26,19 +26,15 @@ class SignedInNav extends Component {
                                 </Link>
                             </div>
                             <div className="col-6 col-md-2 ">
+                                <Link to="/Center" className="userNameNavBar">
+                                    Home
+                                </Link>
                                 <Link
                                     to="/ProfilePage"
                                     className="userNameNavBar"
                                 >
                                     {user}
                                 </Link>
-
-                                <button
-                                    onClick={this.props.signOut}
-                                    className="mainNavLogin_name"
-                                >
-                                    <span>Log out</span>
-                                </button>
                             </div>
                         </div>
                     </div>
@@ -62,4 +58,4 @@ const mapStateToProps = (state) => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(SignedInNav);
+export default connect(mapStateToProps, mapDispatchToProps)(ProfilePageNav);
