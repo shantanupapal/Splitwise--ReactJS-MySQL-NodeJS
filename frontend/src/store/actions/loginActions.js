@@ -12,10 +12,10 @@ export const logIn = (credentials) => {
             .then((response) => {
                 console.log(response.status);
                 if (response.status === 200) {
-                    console.log(response.data[0].name);
+                    // console.log(response.data[0].name);
                     dispatch({
                         type: "LOGIN_SUCCESS",
-                        payload: response.data[0].name,
+                        payload: response.data,
                     });
                 }
                 if (response.status === 201) {
@@ -23,12 +23,14 @@ export const logIn = (credentials) => {
                 }
             })
             .catch((err) => {
+                console.log(err);
                 dispatch({ type: "LOGIN_ERROR", err });
             });
     };
 };
 
 export const signOut = () => {
+    window.localStorage.clear();
     return (dispatch, getState) => {
         Axios.get(`${backServer}/logout`).then((response) => {
             if (response.status === 200) {

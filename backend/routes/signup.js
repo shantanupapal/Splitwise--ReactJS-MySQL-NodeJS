@@ -9,6 +9,12 @@ router.post("/", (req, res) => {
     const email = req.body.email;
     console.log("Request for SignUp");
     console.log(req.body);
+
+    const profilephoto = "defaultProfilePhoto.png";
+    const currency = "INR (₹)";
+    const language = "English";
+    const timezone = "(GMT-08:00) Pacific Time (US&amp; Canada)";
+
     const saltRounds = 10;
 
     bcrypt.hash(password, saltRounds, (err, hash) => {
@@ -16,8 +22,8 @@ router.post("/", (req, res) => {
             console.log(err);
         }
         pool.query(
-            "INSERT INTO users (name,email,password) VALUES (?,?,?)",
-            [name, email, hash],
+            "INSERT INTO users (name,email,password,profilephoto,currency,timezone,language) VALUES (?,?,?,?,?,?,?)",
+            [name, email, hash, profilephoto, currency, timezone, language],
             (err, result) => {
                 if (err) {
                     console.log(err);

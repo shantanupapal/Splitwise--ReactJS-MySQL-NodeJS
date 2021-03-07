@@ -34,8 +34,18 @@ router.post("/", (req, res) => {
                             });
                             console.log("RESULT: ", result);
                             req.session.user = result;
-                            console.log(req.session.user);
-                            res.status(200).send(result);
+                            let userDetails = {
+                                user_id: result[0].user_id,
+                                name: result[0].name,
+                                email: result[0].email,
+                                phone: result[0].phone,
+                                currency: result[0].currency,
+                                timezone: result[0].timezone,
+                                language: result[0].language,
+                                profilephoto: result[0].profilephoto,
+                            };
+                            console.log(userDetails);
+                            res.status(200).send(JSON.stringify(userDetails));
 
                             // res.send(result, { message: "Successful Login" });
                             // res.writeHead(200, {

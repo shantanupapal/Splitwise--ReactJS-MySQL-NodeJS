@@ -1,57 +1,135 @@
 /* eslint-disable */
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import profilePhoto from "../../images/profilePhoto.png";
 import "../../App.css";
 import ProfilePageNav from "../layout/ProfilePageNav";
+import Axios from "axios";
+import backServer from "../../webConfig";
 
-class ProfilePage extends Component {
-    // constructor(props) {
-    //     super(props);
-    // }
-    render() {
-        return (
-            <div className="container-fluid">
-                <ProfilePageNav />
-                <div className="container profileMain">
-                    <div className="row">
-                        <div className="col-sm-3" style={{ width: "230px" }}>
-                            <img
-                                src={profilePhoto}
-                                className=""
-                                alt="profilepic"
-                            />
-                            <div>
-                                <label htmlFor="browse">
-                                    Change your avatar
-                                </label>
-                                <input
-                                    type="file"
-                                    id="profileimg"
-                                    name="profileimg"
-                                    accept="image/*"
-                                ></input>
-                            </div>
-                        </div>
+const ProfilePage = () => {
+    const [name, setName] = useState(localStorage.getItem("name"));
+    const [email, setEmail] = useState(localStorage.getItem("email"));
+    const [currency, setCurrency] = useState(localStorage.getItem("currency"));
+    const [timezone, setTimezone] = useState(localStorage.getItem("timezone"));
+    const [language, setLanguage] = useState(localStorage.getItem("language"));
+    const [phone, setPhone] = useState(localStorage.getItem("phone"));
+    const [profilephoto, setProfilePhoto] = useState(
+        localStorage.getItem("profilephoto")
+    );
+    // state = {
 
-                        <div
-                            className="col-sm-3"
-                            style={{ width: "240px", marginRight: "200px" }}
-                        >
-                            <form action="">
-                                <div className="form-group">
-                                    <label htmlFor="username">Your name</label>
+    //     name: localStorage.getItem("name"),
+    //     email: localStorage.getItem("email"),
+    //     currency: localStorage.getItem("currency"),
+    //     timezone: localStorage.getItem("timezone"),
+    //     language: localStorage.getItem("language"),
+    //     phone: localStorage.getItem("phone"),
+    //     profilephoto: localStorage.getItem("profilephoto"),
+    // };
+
+    // fileSelectedHandler = (e) => {
+    //     this.setState({
+    //         profilephoto: e.target.files[0],
+    //     });
+    //     const data = new FormData();
+    //     // data.append("name", this.state.name);
+    //     data.append("profilephoto", this.state.profilephoto);
+    //     Axios.defaults.withCredentials = true;
+    //     // console.log(data);
+    //     Axios.post(`${backServer}/updateprofile`, data).then((response) => {
+    //         console.log("back");
+    //     });
+    // };
+
+    // handleChange = (e) => {
+    //     this.setState({
+    //         [e.target.id]: e.target.value,
+    //     });
+    // };
+    const handleSubmit = (e) => {};
+
+    const handleSubmitPhoto = (e) => {
+        e.preventDefault();
+        const data = new FormData();
+        data.append("profilephoto", profilephoto);
+        Axios.defaults.withCredentials = true;
+        console.log(data);
+        Axios.post(`${backServer}/updateprofile`, data).then((response) => {
+            console.log(response);
+        });
+    };
+    //+ "public/images/profilePhotos/"
+    // render() {
+    // console.log(this.state);
+    let path = "http://localhost:3001/";
+    let profilePhoto1 = localStorage.getItem("profilephoto");
+    profilePhoto1 = profilePhoto1.toString();
+    let profilePhoto = path + profilePhoto1;
+    console.log(profilePhoto);
+    return (
+        <div className="container-fluid">
+            <ProfilePageNav />
+            <div className="container profileMain">
+                <div className="row">
+                    <div className="col-sm-6">
+                        <img
+                            src={profilePhoto}
+                            className=""
+                            alt="profilepic"
+                            style={{
+                                width: "200px",
+                                height: "250px",
+                                marginBottom: "10px",
+                            }}
+                        />
+
+                        <form onSubmit={handleSubmitPhoto}>
+                            <label htmlFor="browse">Change your avatar</label>
+                            <br />
+                            <input
+                                type="file"
+                                id="profilephoto"
+                                name="profilephoto"
+                                onChange={(e) => {
+                                    setProfilePhoto(e.target.files[0]);
+                                }}
+                            ></input>{" "}
+                            <br />
+                            <button
+                                type="submit"
+                                className="btn btn-primary"
+                                style={{ marginTop: "20px" }}
+                            >
+                                Update Photo
+                            </button>
+                        </form>
+                    </div>
+
+                    <div className="col-sm-6" style={{ width: "350px" }}>
+                        <form>
+                            <div
+                                style={{
+                                    paddingBottom: "30px",
+                                    borderBottom: "1px solid lightgrey",
+                                }}
+                            >
+                                <div className="form-group-profilePage">
+                                    <div className="welcomeName">
+                                        <p>Your Details</p>{" "}
+                                    </div>
+                                    <label htmlFor="name">Your name</label>
                                     <input
                                         type="text"
                                         className="form-control"
                                         name=""
-                                        id="username"
+                                        id="name"
+                                        onChange={(e) => {
+                                            setName(e.target.value);
+                                        }}
                                     />
-                                    <a href="#" id="show">
-                                        edit
-                                    </a>
                                 </div>
 
-                                <div className="form-group">
+                                <div className="form-group-profilePage">
                                     <label htmlFor="email">
                                         Your email address
                                     </label>
@@ -60,10 +138,13 @@ class ProfilePage extends Component {
                                         name=""
                                         className="form-control"
                                         id="email"
+                                        onChange={(e) => {
+                                            setEmail(e.target.value);
+                                        }}
                                     />
                                 </div>
 
-                                <div className="form-group">
+                                <div className="form-group-profilePage">
                                     <label htmlFor="phone">
                                         Your phone number
                                     </label>
@@ -72,10 +153,14 @@ class ProfilePage extends Component {
                                         name=""
                                         className="form-control"
                                         id="phone"
+                                        onChange={(e) => {
+                                            setPhone(e.target.value);
+                                        }}
                                     />
                                 </div>
+                            </div>
 
-                                <div className="form-group">
+                            {/*  <div className="form-group">
                                     <label htmlFor="password">
                                         Your password
                                     </label>
@@ -85,73 +170,78 @@ class ProfilePage extends Component {
                                         className="form-control"
                                         id="password"
                                     />
-                                </div>
-                            </form>
-                        </div>
+                                </div>*/}
 
-                        <div className="col-sm-3">
-                            <div className="signup-block">
-                                <form action="">
-                                    <div className="form-group">
-                                        <label htmlFor="">
-                                            Your Default currency
-                                        </label>
-                                        <br />
-                                        <label htmlFor="">
-                                            <small>(for new expenses)</small>
-                                        </label>
-                                        <select
-                                            name="currency"
-                                            className="form-control"
-                                        >
-                                            <option value="USD">USD ($)</option>
-                                            <option value="EUR">EUR (€)</option>
-                                            <option value="GBP">GBP (£)</option>
-                                            <option value="HUF">
-                                                HUF (Ft)
-                                            </option>
-                                            <option value="INR">INR (₹)</option>
-                                        </select>
-                                    </div>
-                                    <div className="form-group">
-                                        <label htmlFor="">You timezone</label>
-                                        <select
-                                            name="timezone"
-                                            className="form-control"
-                                        >
-                                            <option value="Pacific Time (US &amp; Canada)">
-                                                (GMT-08:00) Pacific Time (US
-                                                &amp; Canada)
-                                            </option>
-                                            <option value="Central America">
-                                                (GMT-06:00) Central America
-                                            </option>
-                                        </select>
-                                    </div>
-                                    <div className="form-group">
-                                        <label htmlFor="">Language</label>
-                                        <select
-                                            name="language"
-                                            className="form-control"
-                                        >
-                                            <option value="English">
-                                                English
-                                            </option>
-                                            <option value="Hindi">Hindi</option>
-                                        </select>
-                                    </div>
-                                    <button className="btn btn-primary">
-                                        Save
-                                    </button>
-                                </form>
+                            <div style={{ marginTop: "50px" }}>
+                                <div className="welcomeName">
+                                    <p>Your Preferences</p>{" "}
+                                </div>
+                                <div className="form-group-profilePage">
+                                    <label htmlFor="">
+                                        Your default currency
+                                    </label>
+                                    <br />
+
+                                    <select
+                                        id="currency"
+                                        name="currency"
+                                        className="form-control"
+                                        onChange={(e) => {
+                                            setCurrency(e.target.value);
+                                        }}
+                                    >
+                                        <option value="USD ($)">USD ($)</option>
+                                        <option value="EUR (€)">EUR (€)</option>
+                                        <option value="GBP (£)">GBP (£)</option>
+                                        <option value="HUF (Ft)">
+                                            HUF (Ft)
+                                        </option>
+                                        <option value="INR (₹)">INR (₹)</option>
+                                    </select>
+                                </div>
+                                <div className="form-group-profilePage">
+                                    <label htmlFor="">You time zone</label>
+                                    <select
+                                        id="timezone"
+                                        name="timezone"
+                                        className="form-control"
+                                        onChange={(e) => {
+                                            setTimezone(e.target.value);
+                                        }}
+                                    >
+                                        <option value="Pacific Time (US &amp; Canada)">
+                                            (GMT-08:00) Pacific Time (US &amp;
+                                            Canada)
+                                        </option>
+                                        <option value="Central America">
+                                            (GMT-06:00) Central America
+                                        </option>
+                                    </select>
+                                </div>
+                                <div className="form-group-profilePage">
+                                    <label htmlFor="">Language</label>
+                                    <select
+                                        id="language"
+                                        name="language"
+                                        className="form-control"
+                                        onChange={(e) => {
+                                            setLanguage(e.target.value);
+                                        }}
+                                    >
+                                        <option value="English">English</option>
+                                        <option value="Hindi">Hindi</option>
+                                    </select>
+                                </div>
+                                <button className="btn btn-primary">
+                                    Save
+                                </button>
                             </div>
-                        </div>
-                        <div className="col-sm-3"></div>
+                        </form>
                     </div>
                 </div>
             </div>
-        );
-    }
-}
+        </div>
+    );
+};
 
 export default ProfilePage;

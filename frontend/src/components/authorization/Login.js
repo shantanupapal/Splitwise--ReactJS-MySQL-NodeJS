@@ -25,8 +25,19 @@ class Login extends Component {
     render() {
         const { authError } = this.props;
         const { loggedIn } = this.props;
+        const { user } = this.props;
 
-        if (loggedIn) return <Redirect to="/Center" />;
+        if (loggedIn) {
+            localStorage.setItem("user_id", user.user_id);
+            localStorage.setItem("name", user.name);
+            localStorage.setItem("email", user.email);
+            localStorage.setItem("phone", user.phone);
+            localStorage.setItem("currency", user.currency);
+            localStorage.setItem("language", user.language);
+            localStorage.setItem("timezone", user.timezone);
+            localStorage.setItem("profilephoto", user.profilephoto);
+            return <Redirect to="/Center" />;
+        }
         return (
             <div>
                 <MainNavbar />
@@ -84,6 +95,7 @@ const mapStateToProps = (state) => {
     return {
         authError: state.auth.authError,
         loggedIn: state.auth.loggedIn,
+        user: state.auth.user,
     };
 };
 

@@ -5,16 +5,20 @@ const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const session = require("express-session");
 const cors = require("cors");
+const fileUpload = require("express-fileupload");
+const path = require("path");
 
 app.use(express.json());
 app.use(cookieParser());
-
+app.use(fileUpload());
 app.use(
     cors({
         origin: ["http://localhost:3000"],
         credentials: true, // Allows to cookie be enabled
     })
 );
+
+app.use(express.static(path.join(__dirname, "public")));
 
 //Allow Access Control
 app.use(function (req, res, next) {
