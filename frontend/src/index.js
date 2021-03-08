@@ -8,12 +8,16 @@ import rootReducer from "./reducers/rootReducer";
 import { Provider } from "react-redux";
 import thunk from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
+// import { loadState, saveState } from "./localStorage";
 
 const store = createStore(
     rootReducer,
     composeWithDevTools(applyMiddleware(thunk))
 );
 
+// store.subscribe(() => {
+//     saveState(store.getState());
+// });
 // componentWillMount() {
 //     persistStore(store, {}, () => {
 //         this.setState({rehydrated: true})

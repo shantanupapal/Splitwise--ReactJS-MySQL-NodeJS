@@ -8,15 +8,39 @@ const fs = require("fs");
 const { promisify } = require("util");
 const pipeline = promisify(require("stream").pipeline);
 
-router.post("/", upload.single("profilephoto"), function (req, res) {
-    if (req.files) {
-        const profilephoto = req.files.profilephoto;
-        const filename = req.files.profilephoto.name;
-        console.log(filename);
+router.post("/", (req, res) => {
+    const name = req.body.name;
+    const email = req.body.email;
+    const phone = req.body.phone;
+    const currency = req.body.currency;
+    const timezone = req.body.timezone;
+    const language = req.body.language;
+    const user_id = req.body.user_id;
+    console.log(req.body);
 
-        profilephoto.mv("public/" + filename);
-        res.end("done");
-    }
+    pool.query(
+        "UPDATE users SET name = ?, email = ?, phone = ?, currency = ?, timezone = ?,language = ? WHERE user_id = ?",
+        [name, email, phone, currency, timezone, language, user_id],
+        (err, result) => {
+            if (err) {
+                console.log(err);
+                res.writeHead(404, {
+                    "Content-Type": "text/plain",
+                });
+                res.end("Error in updating");
+            } else {
+                let userDetails = {
+                    name: name,
+                    email: email,
+                    phone: phone,
+                    currency: currency,
+                    timezone: timezone,
+                    language: language,
+                };
+                res.status(200).send(JSON.stringify(userDetails));
+            }
+        }
+    );
 });
 
 module.exports = router;

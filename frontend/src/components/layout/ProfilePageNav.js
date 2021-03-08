@@ -13,8 +13,7 @@ class ProfilePageNav extends Component {
     // console.log(props);
 
     render() {
-        const { user } = this.props;
-        console.log(user);
+        const user = localStorage.getItem("name");
         return (
             <nav className="navbar fixed-top mainNavBar">
                 <div className="container-fluid">

@@ -271,3 +271,29 @@ exports.index = function(req, res){
    }
  
 };
+
+
+/*  */
+
+        <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <img src={logo} alt="" style={{width:"30px", height:"30px"}} />
+                    <Link to="/" className="nav_name">
+                        <span>Splitwise</span>
+                    </Link>
+                </div>
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <Link to="/Login" className="landingPageLogin_name">
+                            <span>Log in</span>
+                        </Link>
+                    </li>
+                    <li>
+                        <Link to="/SignUp" className="landingPageSignup_name">
+                            Sign Up
+                        </Link>
+                    </li>
+                </ul>
+            </div>
+        </nav>

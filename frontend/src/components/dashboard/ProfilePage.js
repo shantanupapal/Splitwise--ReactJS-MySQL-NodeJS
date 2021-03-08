@@ -16,6 +16,7 @@ const ProfilePage = () => {
     const [profilephoto, setProfilePhoto] = useState(
         localStorage.getItem("profilephoto")
     );
+    const user_id = localStorage.getItem("user_id");
     // state = {
 
     //     name: localStorage.getItem("name"),
@@ -46,17 +47,64 @@ const ProfilePage = () => {
     //         [e.target.id]: e.target.value,
     //     });
     // };
-    const handleSubmit = (e) => {};
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        Axios.defaults.withCredentials = true;
+        // console.log(name, email, phone, currency, timezone, language, user_id);
+        // console.log("IM in handlesubmit");
+        Axios.post(`${backServer}/updateprofile`, {
+            name: name,
+            email: email,
+            phone: phone,
+            currency: currency,
+            timezone: timezone,
+            language: language,
+            user_id: user_id,
+        })
+            .then((response) => {
+                console.log("Done: " + response.data.name);
+                localStorage.setItem("name", name);
+                localStorage.setItem("email", email);
+                localStorage.setItem("phone", phone);
+                localStorage.setItem("currency", currency);
+                localStorage.setItem("timezone", timezone);
+                localStorage.setItem("language", language);
+            })
+            .catch((err) => {
+                console.log("Error: " + err);
+            });
+    };
 
     const handleSubmitPhoto = (e) => {
         e.preventDefault();
-        const data = new FormData();
-        data.append("profilephoto", profilephoto);
         Axios.defaults.withCredentials = true;
+        console.log("IM in handlesubmitphoto");
+        // profilephoto.name = user_id + ".JPG";
+        // console.log(profilephoto.name);
+        Axios.post(`${backServer}/changeuserid`, { user_id: user_id }).then(
+            (response) => {
+                console.log(response);
+            }
+        );
+
+        let data = new FormData();
+        data.append("profilephoto", profilephoto);
+        data.append("user_id", user_id);
+
         console.log(data);
-        Axios.post(`${backServer}/updateprofile`, data).then((response) => {
-            console.log(response);
-        });
+        Axios.post(`${backServer}/updateprofilephoto`, data).then(
+            (response) => {
+                console.log(response.data);
+                localStorage.setItem("profilephoto", response.data);
+            }
+        );
+        // Axios.post("https://httpbin.org/anything", data)
+        //     .then((response) => {
+        //         console.log(response);
+        //     })
+        //     .catch((error) => {
+        //         console.log(error);
+        //     });
     };
     //+ "public/images/profilePhotos/"
     // render() {
@@ -83,7 +131,10 @@ const ProfilePage = () => {
                             }}
                         />
 
-                        <form onSubmit={handleSubmitPhoto}>
+                        <form
+                            encType="multipart/form-data"
+                            onSubmit={handleSubmitPhoto}
+                        >
                             <label htmlFor="browse">Change your avatar</label>
                             <br />
                             <input
@@ -106,7 +157,7 @@ const ProfilePage = () => {
                     </div>
 
                     <div className="col-sm-6" style={{ width: "350px" }}>
-                        <form>
+                        <form onSubmit={handleSubmit}>
                             <div
                                 style={{
                                     paddingBottom: "30px",
@@ -126,6 +177,7 @@ const ProfilePage = () => {
                                         onChange={(e) => {
                                             setName(e.target.value);
                                         }}
+                                        defaultValue={name}
                                     />
                                 </div>
 
@@ -141,6 +193,7 @@ const ProfilePage = () => {
                                         onChange={(e) => {
                                             setEmail(e.target.value);
                                         }}
+                                        defaultValue={email}
                                     />
                                 </div>
 
@@ -156,6 +209,7 @@ const ProfilePage = () => {
                                         onChange={(e) => {
                                             setPhone(e.target.value);
                                         }}
+                                        defaultValue={phone}
                                     />
                                 </div>
                             </div>

@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 const MainNavbar = (props) => {
     const { loggedIn } = props;
     const links = loggedIn ? <SignedInNav /> : <SignedOutNav />; // console.log(loggedIn);
-    return <div>{links}</div>;
+    return <header>{links}</header>;
 };
 
 const mapStateToProps = (state) => {

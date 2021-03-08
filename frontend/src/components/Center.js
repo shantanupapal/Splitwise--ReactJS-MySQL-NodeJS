@@ -8,7 +8,7 @@ import Axios from "axios";
 import backServer from ".././webConfig";
 class Center extends Component {
     componentDidMount = () => {
-        const { loggedIn } = this.props;
+        // const { loggedIn } = this.props;
         const name = localStorage.getItem("name");
         if (localStorage.getItem("user_id") === "undefined") {
             Axios.post(`${backServer}/senduserid`, { name: name })

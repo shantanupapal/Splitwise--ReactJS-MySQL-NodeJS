@@ -9,6 +9,7 @@ const fileUpload = require("express-fileupload");
 const path = require("path");
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(fileUpload());
 app.use(
@@ -49,5 +50,7 @@ app.use(
         activeDuration: 5 * 60 * 1000,
     })
 );
+
+app.locals.user_id_photochange = "";
 
 module.exports = app;

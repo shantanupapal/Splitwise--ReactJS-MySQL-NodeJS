@@ -13,19 +13,20 @@ class SignedInNav extends Component {
     // console.log(props);
 
     render() {
-        const { user } = this.props;
-        console.log(user);
+        // const { user } = this.props;
+        // console.log(user);
+        const user = localStorage.getItem("name");
         return (
             <nav className="navbar fixed-top mainNavBar">
                 <div className="container-fluid">
                     <div className="container">
                         <div className="row align-items-center">
-                            <div className="col-12 col-md-10 mainNav_img ">
+                            <div className="col-12 col-md-9 mainNav_img ">
                                 <Link to="/Login">
                                     <img src={logo2} alt="" />
                                 </Link>
                             </div>
-                            <div className="col-6 col-md-2 ">
+                            <div className="col-6 col-md-3 ">
                                 <Link
                                     to="/ProfilePage"
                                     className="userNameNavBar"
