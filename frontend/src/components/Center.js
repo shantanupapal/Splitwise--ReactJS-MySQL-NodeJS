@@ -4,8 +4,23 @@ import LeftSideBar from "./layout/LeftSideBar";
 import MainNavbar from "./layout/MainNavbar";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
-
+import Axios from "axios";
+import backServer from ".././webConfig";
 class Center extends Component {
+    componentDidMount = () => {
+        const { loggedIn } = this.props;
+        const name = localStorage.getItem("name");
+        if (localStorage.getItem("user_id") === "undefined") {
+            Axios.post(`${backServer}/senduserid`, { name: name })
+                .then((response) => {
+                    console.log("USED- ID: ", response.data);
+                    localStorage.setItem("user_id", response.data);
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+        }
+    };
     render() {
         console.log("Props");
         console.log(this.props);

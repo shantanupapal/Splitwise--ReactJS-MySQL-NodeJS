@@ -14,6 +14,7 @@ router.post("/", (req, res) => {
     const currency = "INR (₹)";
     const language = "English";
     const timezone = "(GMT-08:00) Pacific Time (US&amp; Canada)";
+    const phone = "";
 
     const saltRounds = 10;
 
@@ -22,8 +23,17 @@ router.post("/", (req, res) => {
             console.log(err);
         }
         pool.query(
-            "INSERT INTO users (name,email,password,profilephoto,currency,timezone,language) VALUES (?,?,?,?,?,?,?)",
-            [name, email, hash, profilephoto, currency, timezone, language],
+            "INSERT INTO users (name,email,password,profilephoto,currency,timezone,language,phone) VALUES (?,?,?,?,?,?,?,?)",
+            [
+                name,
+                email,
+                hash,
+                profilephoto,
+                currency,
+                timezone,
+                language,
+                phone,
+            ],
             (err, result) => {
                 if (err) {
                     console.log(err);
@@ -32,6 +42,15 @@ router.post("/", (req, res) => {
                     });
                     res.end("Email already exist. Please enter another email");
                 } else {
+                    let userDetails = {
+                        name: name,
+                        email: email,
+                        phone: phone,
+                        currency: currency,
+                        timezone: timezone,
+                        language: language,
+                        profilephoto: profilephoto,
+                    };
                     console.log("Result from db");
                     console.log(result);
                     res.cookie("cookie", name, {
@@ -41,7 +60,7 @@ router.post("/", (req, res) => {
                     });
                     req.session.user = result;
                     console.log(req.session.user);
-                    res.status(200).send(result);
+                    res.status(200).send(JSON.stringify(userDetails));
                 }
             }
         );

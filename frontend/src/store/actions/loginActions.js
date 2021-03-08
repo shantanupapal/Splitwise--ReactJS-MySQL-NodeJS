@@ -56,7 +56,7 @@ export const signUp = (newAccount) => {
                     // console.log(response.data[0].name);
                     dispatch({
                         type: "SIGNUP_SUCCESS",
-                        payload: newAccount.name,
+                        payload: response.data,
                     });
                 }
             })
