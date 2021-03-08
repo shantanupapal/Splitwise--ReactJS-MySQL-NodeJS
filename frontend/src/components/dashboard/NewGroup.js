@@ -10,8 +10,9 @@ import Axios from "axios";
 class NewGroup extends Component {
     state = {
         groupName: "",
-        groupCreator: this.props.user,
+        groupCreator: this.props.user.name,
         groupMembers: [{ groupMember: null }],
+        suggestions: [],
     };
 
     // createUI() {
@@ -30,18 +31,65 @@ class NewGroup extends Component {
     //         </div>
     //     ));
     // }
+    componentDidMount = () => {
+        //FETCH ALL USERNAMES AND STORE IN LOCALSTORAGE
+    };
 
     handleChange = (i, event) => {
-        let groupMembers = [...this.state.groupMembers];
-        groupMembers[i].groupMember = event.target.value;
-        this.setState({ ...this.state, groupMembers });
-        console.log(this.state);
+        const items = [
+            "shantanu",
+            "devika",
+            "sara",
+            "anish",
+            "sumeet",
+            "piyush",
+            "ajit",
+        ];
+        const tosuggested = event.target.value;
+        let suggestions = [];
+        if (tosuggested.length > 0) {
+            console.log("inif");
+            const regex = new RegExp(`^${tosuggested}`, "i");
+            suggestions = items.sort().filter((v) => regex.test(v));
+            console.log(suggestions);
+            let groupMembers = [...this.state.groupMembers];
+            groupMembers[i].groupMember = event.target.value;
+            this.setState({ ...this.state, groupMembers });
+            console.log(this.state);
+        }
+        console.log("suggestions: ", suggestions);
+        this.setState({ ...this.state, suggestions });
+
+        console.log("state after suggest: ", this.state);
+        // if (this.state.suggestions.length > 0) {
+        //     let groupMembers = [...this.state.groupMembers];
+        //     groupMembers[i].groupMember = event.target.value;
+        //     this.setState({ ...this.state, groupMembers });
+        //     console.log(this.state);
+        // }
+
+        //earlier
+    };
+
+    showSuggestions = () => {
+        const { suggestions } = this.state;
+        if (suggestions.length === 0) {
+            return null;
+        }
+        return (
+            <ul>
+                {suggestions.map((item) => {
+                    return <li>{item}</li>;
+                })}
+            </ul>
+        );
     };
 
     addOnClick = () => {
         this.setState((prevState) => ({
             ...this.state,
             groupMembers: [...prevState.groupMembers, { groupMember: null }],
+            suggestions: [],
         }));
     };
 
@@ -54,6 +102,8 @@ class NewGroup extends Component {
     handleSubmit = (event) => {
         event.preventDefault();
         Axios.defaults.withCredentials = true;
+
+        //CHECK IF THE GROUP MEMBERS ADDED ARE PRESENT IN DB COMPARING WITH LOCAL STORAGE
 
         // let groupMembers = [...this.state.groupMembers];
         // groupMembers.push(this.props.user);
@@ -78,7 +128,7 @@ class NewGroup extends Component {
     };
 
     render() {
-        const { user } = this.props;
+        const { user } = this.props.user.name;
         const { loggedIn } = this.props;
         if (!loggedIn) return <Redirect to="/Login" />;
         return (
@@ -126,11 +176,12 @@ class NewGroup extends Component {
                                                 <input
                                                     type="text"
                                                     className="form-control"
-                                                    value={el.groupMember || ""}
+                                                    // value={el.groupMember || ""}
                                                     onChange={(e) =>
                                                         this.handleChange(i, e)
                                                     }
                                                 />
+                                                {this.showSuggestions()}
                                             </div>
                                             <div className="col-sm-2">
                                                 <Link
