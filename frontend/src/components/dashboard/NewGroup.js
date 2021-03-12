@@ -71,14 +71,14 @@ class NewGroup extends Component {
         //earlier
     };
 
-    showSuggestions = () => {
+    showSuggestions = (i) => {
         const { suggestions } = this.state;
         if (suggestions.length === 0) {
             return null;
         }
         return (
             <ul>
-                {suggestions.map((item) => {
+                {suggestions.map((i, item) => {
                     return <li>{item}</li>;
                 })}
             </ul>
