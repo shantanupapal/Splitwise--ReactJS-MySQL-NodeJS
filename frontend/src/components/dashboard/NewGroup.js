@@ -13,6 +13,7 @@ class NewGroup extends Component {
         groupCreator: this.props.user.name,
         groupMembers: [{ groupMember: null }],
         suggestions: [],
+        allUsers: [],
     };
 
     // createUI() {
@@ -33,24 +34,27 @@ class NewGroup extends Component {
     // }
     componentDidMount = () => {
         //FETCH ALL USERNAMES AND STORE IN LOCALSTORAGE
+        console.log("DID MOUNT");
+        Axios.get(`${backServer}/getallusers`)
+            .then((response) => {
+                console.log(typeof response.data);
+                console.log(response.data);
+                localStorage.setItem("allUsers", JSON.stringify(response.data));
+            })
+            .then(() => {
+                const allUsers = JSON.parse(localStorage.getItem("allUsers"));
+                const items = Object.values(allUsers);
+                console.log(items);
+            });
     };
 
     handleChange = (i, event) => {
-        const items = [
-            "shantanu",
-            "devika",
-            "sara",
-            "anish",
-            "sumeet",
-            "piyush",
-            "ajit",
-        ];
         const tosuggested = event.target.value;
         let suggestions = [];
         if (tosuggested.length > 0) {
             console.log("inif");
             const regex = new RegExp(`^${tosuggested}`, "i");
-            suggestions = items.sort().filter((v) => regex.test(v));
+            // suggestions = items.sort().filter((v) => regex.test(v));
             console.log(suggestions);
             let groupMembers = [...this.state.groupMembers];
             groupMembers[i].groupMember = event.target.value;

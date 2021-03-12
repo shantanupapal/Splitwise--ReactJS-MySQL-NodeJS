@@ -8,6 +8,7 @@ const updateprofilephoto = require("./routes/updateprofilephoto");
 const senduserid = require("./routes/senduserid");
 const updateprofile = require("./routes/updateprofile");
 const changeuserid = require("./routes/changeuserid");
+const getallusers = require("./routes/getallusers");
 
 app.use("/login", login);
 app.use("/signup", signup);
@@ -17,6 +18,7 @@ app.use("/updateprofilephoto", updateprofilephoto);
 app.use("/senduserid", senduserid);
 app.use("/updateprofile", updateprofile);
 app.use("/changeuserid", changeuserid);
+app.use("/getallusers", getallusers);
 
 app.listen(3001, () => {
     console.log("Running on 3001");
