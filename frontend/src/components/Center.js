@@ -22,8 +22,8 @@ class Center extends Component {
         }
     };
     render() {
-        console.log("Props");
-        console.log(this.props);
+        // console.log("Props");
+        // console.log(this.props);
         const { loggedIn } = this.props;
         if (!loggedIn) return <Redirect to="/Login" />;
 
@@ -32,13 +32,13 @@ class Center extends Component {
                 <MainNavbar />
                 <div className="container-fluid text-center">
                     <div className="row content align-items-center">
-                        <div className="col-xl-3">
+                        <div className="col-xl-2">
                             <LeftSideBar />
                         </div>
-                        <div className="col-xl-6">
+                        <div className="col-xl-8">
                             <Dashboard />
                         </div>
-                        <div className="col-xl-3"></div>
+                        <div className="col-xl-2"></div>
                     </div>
                 </div>
             </div>
@@ -47,8 +47,8 @@ class Center extends Component {
 }
 
 const mapStateToProps = (state) => {
-    console.log("This is State ");
-    console.log(state);
+    // console.log("This is State ");
+    // console.log(state);
     return {
         loggedIn: state.auth.loggedIn,
     };

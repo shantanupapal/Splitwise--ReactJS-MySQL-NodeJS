@@ -9,6 +9,8 @@ const senduserid = require("./routes/senduserid");
 const updateprofile = require("./routes/updateprofile");
 const changeuserid = require("./routes/changeuserid");
 const getallusers = require("./routes/getallusers");
+const usergroups = require("./routes/usergroups");
+const acceptgroupinvite = require("./routes/acceptgroupinvite");
 
 app.use("/login", login);
 app.use("/signup", signup);
@@ -19,6 +21,8 @@ app.use("/senduserid", senduserid);
 app.use("/updateprofile", updateprofile);
 app.use("/changeuserid", changeuserid);
 app.use("/getallusers", getallusers);
+app.use("/usergroups", usergroups);
+app.use("/acceptgroupinvite", acceptgroupinvite);
 
 app.listen(3001, () => {
     console.log("Running on 3001");

@@ -8,7 +8,7 @@ router.post("/", (req, res) => {
     const members_id_to_add = req.body.members;
     const groupname = req.body.groupname;
     const creator_id = req.body.creator_id;
-    let invitation_accepted = false;
+    let invitation_accepted = 0;
     let group_id;
 
     console.log(typeof members_id_to_add);
@@ -114,6 +114,9 @@ router.post("/", (req, res) => {
                                         console.log(
                                             "total rows inserted: ",
                                             result.affectedRows
+                                        );
+                                        res.status(200).end(
+                                            "Group created successfully"
                                         );
                                     }
                                 });

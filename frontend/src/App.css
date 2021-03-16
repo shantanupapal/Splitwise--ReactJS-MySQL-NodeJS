@@ -183,7 +183,7 @@
     margin-left: 5px;
     background: #f6f6f6;
     color: #ccc;
-    font-size: 12px;
+    font-size: 17px;
     margin-top: 5px;
     border-top: 1px solid #f3f3f3;
     border-bottom: 1px solid #eee;
@@ -192,7 +192,7 @@
 
 /* ---------------Dashboard--------------- */
 .centerOfPage {
-    margin-top: 30px;
+    margin-top: 40px;
     padding-top: 9px;
     background: #fff;
     min-height: auto;
@@ -240,4 +240,49 @@
 
 .form-group-profilePage {
     padding-bottom: 20px;
+}
+
+/*-------------MyGroup----------*/
+.categoryHeader {
+    font-size: 20px;
+    text-transform: uppercase;
+    color: #999;
+    padding: 5px 0;
+    border-bottom: 2px solid #eee;
+}
+/* .categoryMain {
+    border-bottom: 2px solid #eee;
+} */
+
+.groupItem,
+.pendingGroupItem {
+    padding: 10px 0;
+    font-size: 17px;
+    /* background-color: rgb(245, 245, 245); */
+    background-color: #56d4b9;
+    margin: 5px 0;
+    color: white;
+}
+.groupItem:hover {
+    /* background-color: rgb(197, 197, 197); */
+    background-color: #1cc29f;
+    cursor: pointer;
+}
+
+.acceptInvite {
+    font-size: 14px;
+    color: #fff;
+    border-radius: 5px;
+    background-color: #ff652f;
+    cursor: pointer;
+    text-decoration: inherit;
+    border: 0 solid;
+    box-sizing: inherit;
+    box-shadow: 1px 1px 1px 1px rgb(55 59 63 / 50%);
+    padding: 0.3rem;
+    overflow: hidden;
+}
+
+.acceptInvite:hover {
+    cursor: pointer;
 }

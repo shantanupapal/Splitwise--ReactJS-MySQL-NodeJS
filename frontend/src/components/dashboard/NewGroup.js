@@ -6,10 +6,13 @@ import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import backServer from "../../webConfig";
 import Axios from "axios";
+import { withRouter } from "react-router-dom";
+import swal from "sweetalert";
+// import swal from "@sweetalert/with-react";
 
 class NewGroup extends Component {
     state = {
-        groupName: "",
+        groupName: null,
         groupCreator: this.props.user.name,
         groupMembers: [{ groupMember: null }],
         memberSuggestions: [],
@@ -50,6 +53,7 @@ class NewGroup extends Component {
                 console.log(names);
                 this.setState({ ...this.state, allUsers: names });
             });
+        // swal("Oops!", "Something went wrong!", "error");
     };
 
     handleChange = (i, event) => {
@@ -86,7 +90,7 @@ class NewGroup extends Component {
             return null;
         }
         return (
-            <ul>
+            <ul style={{ listStyle: "none" }}>
                 {memberSuggestions.map((item) => {
                     return <li>{item}</li>;
                 })}
@@ -109,77 +113,167 @@ class NewGroup extends Component {
         // delete groupMembers[i];
         this.setState({ ...this.state, groupMembers: groupMembers });
         console.log("state after remove1:", this.state);
-        console.log("state after remove2:", this.state);
-        console.log("state after remove3:", this.state);
-        console.log("state after remove4:", this.state);
-        console.log("state after remove5:", this.state);
+        // console.log("state after remove2:", this.state);
+        // console.log("state after remove3:", this.state);
+        // console.log("state after remove4:", this.state);
+        // console.log("state after remove5:", this.state);
     };
 
     handleSubmit = (event) => {
         event.preventDefault();
         Axios.defaults.withCredentials = true;
-
-        //CHECK IF THE GROUP MEMBERS ADDED ARE PRESENT IN DB COMPARING WITH LOCAL STORAGE
-        let invalid_users_flag = false;
-        const allUsers = JSON.parse(localStorage.getItem("allUsers"));
-        const usersFromLocal = Object.values(allUsers);
-        console.log(usersFromLocal);
-        const names = [];
-        const ids = [];
-        usersFromLocal.forEach((item) => {
-            names.push(item.name);
-            ids.push(item.user_id);
-        });
-        console.log(ids);
-        // const ids_names = Object.assign(
-        //     ...ids.map((k, i) => ({ [k]: names[i] }))
-        // );
-        // console.log("ids_names: ", ids_names);
         const groupMembers = [...this.state.groupMembers];
-        // console.log(groupMembers);
-        const members_id_to_add = [];
-        const creator_id = parseInt(localStorage.getItem("user_id"));
-        members_id_to_add.push(creator_id);
-        const invalid_members = [];
-        groupMembers.forEach((member) => {
-            if (names.includes(member.groupMember)) {
-                // console.log("Present", ids[names.indexOf(member.groupMember)]);
-                members_id_to_add.push(ids[names.indexOf(member.groupMember)]);
-                console.log("Members to add ", members_id_to_add);
-                //Write members to add
-                // ids_names.forEach((item)=>{
+        console.log("Members: ", groupMembers);
+        // const members_id_to_add = [];
+        // const creator_id = parseInt(localStorage.getItem("user_id"));
+        // members_id_to_add.push(creator_id);
+        // console.log("Memberssss: ", members_id_to_add);
 
-                // })
+        if (this.state.groupName === null) {
+            swal("Oops!", "Please enter a group name", "error");
+            // alert("Please enter a group name");
+        } else {
+            if (groupMembers.length === 1) {
+                swal("Oops!", "Please add a member to the group", "error");
+                // alert("Please add a member to the group");
             } else {
-                invalid_members.push(member.groupMember);
-                console.log(invalid_members);
-                // console.log("Not Present", member.groupMember);
-                // alert(
-                //     member.groupMember +
-                //         " is not a registered user. This user will not be added to the group"
+                let invalid_users_flag = false;
+                const allUsers = JSON.parse(localStorage.getItem("allUsers"));
+                const usersFromLocal = Object.values(allUsers);
+                // console.log(usersFromLocal);
+                const names = [];
+                const ids = [];
+                usersFromLocal.forEach((item) => {
+                    names.push(item.name);
+                    ids.push(item.user_id);
+                });
+                // console.log(ids);
+                // const ids_names = Object.assign(
+                //     ...ids.map((k, i) => ({ [k]: names[i] }))
                 // );
-                invalid_users_flag = true;
+                // console.log("ids_names: ", ids_names);
+
+                console.log(groupMembers);
+                const members_id_to_add = [];
+                const creator_id = parseInt(localStorage.getItem("user_id"));
+                members_id_to_add.push(creator_id);
+                const invalid_members = [];
+                groupMembers.forEach((member) => {
+                    if (names.includes(member.groupMember)) {
+                        // console.log("Present", ids[names.indexOf(member.groupMember)]);
+                        members_id_to_add.push(
+                            ids[names.indexOf(member.groupMember)]
+                        );
+                        console.log("Members to add ", members_id_to_add);
+                        //Write members to add
+                        // ids_names.forEach((item)=>{
+
+                        // })
+                    } else {
+                        invalid_members.push(member.groupMember);
+                        console.log(invalid_members);
+                        // console.log("Not Present", member.groupMember);
+                        // alert(
+                        //     member.groupMember +
+                        //         " is not a registered user. This user will not be added to the group"
+                        // );
+                        invalid_users_flag = true;
+                    }
+                });
+                if (invalid_users_flag) {
+                    // swal(
+                    //     "Oops!",
+                    //     "Not Registered: " +
+                    //         invalid_members +
+                    //         ". These users will not be added to the group.",
+                    //     "error"
+                    // );
+                    alert(
+                        "Not Registered: " +
+                            invalid_members +
+                            ". These users will not be added to the group."
+                    );
+                }
+
+                Axios.post(`${backServer}/newgroup`, {
+                    members: members_id_to_add,
+                    groupname: this.state.groupName,
+                    creator_id: creator_id,
+                })
+                    .then((response) => {
+                        console.log(response.status);
+                        console.log("Group created successfully");
+                        this.props.history.push("/Center");
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                    });
             }
-        });
-        if (invalid_users_flag) {
-            alert(
-                "Not Registered: " +
-                    invalid_members +
-                    "These users will not be added to the group."
-            );
         }
 
-        Axios.post(`${backServer}/newgroup`, {
-            members: members_id_to_add,
-            groupname: this.state.groupName,
-            creator_id: creator_id,
-        })
-            .then((response) => {
-                console.log(response.status);
-            })
-            .catch((err) => {
-                console.log(err);
-            });
+        // Axios.defaults.withCredentials = true;
+
+        //CHECK IF THE GROUP MEMBERS ADDED ARE PRESENT IN DB COMPARING WITH LOCAL STORAGE
+        // let invalid_users_flag = false;
+        // const allUsers = JSON.parse(localStorage.getItem("allUsers"));
+        // const usersFromLocal = Object.values(allUsers);
+        // // console.log(usersFromLocal);
+        // const names = [];
+        // const ids = [];
+        // usersFromLocal.forEach((item) => {
+        //     names.push(item.name);
+        //     ids.push(item.user_id);
+        // });
+        // // console.log(ids);
+        // // const ids_names = Object.assign(
+        // //     ...ids.map((k, i) => ({ [k]: names[i] }))
+        // // );
+        // // console.log("ids_names: ", ids_names);
+
+        // console.log(groupMembers);
+        // const members_id_to_add = [];
+        // const creator_id = parseInt(localStorage.getItem("user_id"));
+        // members_id_to_add.push(creator_id);
+        // const invalid_members = [];
+        // groupMembers.forEach((member) => {
+        //     if (names.includes(member.groupMember)) {
+        //         // console.log("Present", ids[names.indexOf(member.groupMember)]);
+        //         members_id_to_add.push(ids[names.indexOf(member.groupMember)]);
+        //         console.log("Members to add ", members_id_to_add);
+        //         //Write members to add
+        //         // ids_names.forEach((item)=>{
+
+        //         // })
+        //     } else {
+        //         invalid_members.push(member.groupMember);
+        //         console.log(invalid_members);
+        //         // console.log("Not Present", member.groupMember);
+        //         // alert(
+        //         //     member.groupMember +
+        //         //         " is not a registered user. This user will not be added to the group"
+        //         // );
+        //         invalid_users_flag = true;
+        //     }
+        // });
+        // if (invalid_users_flag) {
+        //     alert(
+        //         "Not Registered: " +
+        //             invalid_members +
+        //             ". These users will not be added to the group."
+        //     );
+        // }
+
+        // Axios.post(`${backServer}/newgroup`, {
+        //     members: members_id_to_add,
+        //     groupname: this.state.groupName,
+        //     creator_id: creator_id,
+        // })
+        //     .then((response) => {
+        //         console.log(response.status);
+        //     })
+        //     .catch((err) => {
+        //         console.log(err);
+        //     });
 
         // let groupMembers = [...this.state.groupMembers];
         // groupMembers.push(this.props.user);

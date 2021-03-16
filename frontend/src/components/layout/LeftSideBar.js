@@ -5,7 +5,7 @@ const LeftSideBar = () => {
     return (
         <div className="leftSideNav">
             <div className="left">
-                <Link to="/Dashboard">
+                <Link to="/Center">
                     <table className="options">
                         <thead>
                             <tr>
@@ -41,7 +41,21 @@ const LeftSideBar = () => {
                         <table className="groupsItems">
                             <thead>
                                 <tr>
-                                    <td>GROUPS</td>
+                                    <td>
+                                        <i
+                                            class="fas fa-users"
+                                            aria-hidden="true"
+                                        ></i>
+                                    </td>
+                                    <td>
+                                        <Link
+                                            style={{ fontSize: "17px" }}
+                                            to="/MyGroupsCenter"
+                                        >
+                                            <td>My Groups</td>
+                                        </Link>
+                                    </td>
+
                                     <td>
                                         <Link
                                             to="/NewGroup"
