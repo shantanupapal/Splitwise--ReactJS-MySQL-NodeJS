@@ -58,7 +58,7 @@ const MyGroups = ({ myGroups, myPendingGroups, acceptGroup }) => {
         })
     ) : (
         <p style={{ fontSize: "20px", color: "#1cc29f" }}>
-            No Pending Inviatations
+            No Pending Invitations
         </p>
     );
     return (
@@ -71,7 +71,7 @@ const MyGroups = ({ myGroups, myPendingGroups, acceptGroup }) => {
                 </div>
             </div>
             <div className="container">
-                <div className="row align-items-center">
+                <div className="row align-items-top">
                     <div
                         className="col-sm-4"
                         style={{

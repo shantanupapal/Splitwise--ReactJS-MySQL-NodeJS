@@ -32,12 +32,13 @@ export const logIn = (credentials) => {
 export const signOut = () => {
     window.localStorage.clear();
     return (dispatch, getState) => {
-        Axios.get(`${backServer}/logout`).then((response) => {
-            if (response.status === 200) {
-                cookie.remove("cookie", { path: "/" });
-                dispatch({ type: "SIGNOUT_SUCCESS" });
-            }
-        });
+        // Axios.get(`${backServer}/logout`).then((response) => {
+        // if (response.status === 200) {
+        localStorage.clear();
+        cookie.remove("cookie", { path: "/" });
+        dispatch({ type: "SIGNOUT_SUCCESS" });
+        // }
+        // });
     };
 };
 

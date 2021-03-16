@@ -4,7 +4,7 @@ const pool = require("../pool");
 
 router.get("/", (req, res) => {
     console.log("Reached here");
-    pool.query("SELECT user_id,name FROM users", (err, result, fields) => {
+    pool.query("SELECT user_id,name FROM users", (err, result) => {
         if (err) {
             console.log("Error: ", err);
             res.writeHead(500, {
