@@ -7,7 +7,7 @@ import { Redirect } from "react-router-dom";
 import Axios from "axios";
 import backServer from ".././webConfig";
 import MyGroups from "./dashboard/MyGroups";
-class Center extends Component {
+class MyGroupsCenter extends Component {
     state = {
         allGroups: [],
         myGroups: [],
@@ -122,4 +122,4 @@ const mapStateToProps = (state) => {
     };
 };
 
-export default connect(mapStateToProps, null)(Center);
+export default connect(mapStateToProps, null)(MyGroupsCenter);

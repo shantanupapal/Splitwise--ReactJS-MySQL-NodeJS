@@ -7,6 +7,7 @@ import Center from "./components/Center";
 import NewGroup from "./components/dashboard/NewGroup";
 import ProfilePage from "./components/dashboard/ProfilePage";
 import MyGroupsCenter from "./components/MyGroupsCenter";
+import GroupById from "./components/dashboard/GroupById";
 
 //Create a Main Component
 class Main extends Component {
@@ -21,6 +22,7 @@ class Main extends Component {
                 <Route path="/NewGroup" component={NewGroup} />
                 <Route path="/ProfilePage" component={ProfilePage} />
                 <Route path="/MyGroupsCenter" component={MyGroupsCenter} />
+                <Route path="/:group_id" component={GroupById}></Route>
             </Switch>
         );
     }

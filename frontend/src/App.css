@@ -286,3 +286,34 @@
 .acceptInvite:hover {
     cursor: pointer;
 }
+
+/*--------------Modal-------------*/
+.modalHeader {
+    background-color: #1cc29f;
+}
+
+.expenseDescription,
+.currency {
+    height: 30px;
+    line-height: 24px;
+    margin-top: 1px;
+    margin-bottom: 3px;
+    padding-left: 3px;
+    padding-right: 3px;
+    border-bottom: 1px dashed #ccc !important;
+    text-decoration: none;
+    border: none;
+    float: right;
+    outline: none;
+    box-shadow: none !important;
+    text-align: left;
+    width: 177px;
+    color: #333;
+
+    border-radius: 0;
+    padding-bottom: 2px;
+}
+
+::placeholder {
+    color: #ccc;
+}

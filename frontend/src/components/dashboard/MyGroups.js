@@ -4,11 +4,24 @@ import Axios from "axios";
 import backServer from "../../webConfig";
 
 const MyGroups = ({ myGroups, myPendingGroups, acceptGroup }) => {
+    const groupToLS = (name) => {
+        localStorage.setItem("group_name", name);
+    };
     const groupsList = myGroups.length ? (
         myGroups.map((group) => {
             return (
                 <div key={group.group_id} className={"groupItem"}>
-                    <span>{group.groupname}</span>
+                    <Link
+                        onClick={() => {
+                            groupToLS(group.groupname);
+                        }}
+                        to={"/" + group.group_id}
+                        style={{ textDecoration: "None", color: "white" }}
+                    >
+                        <div>
+                            <span>{group.groupname}</span>
+                        </div>
+                    </Link>
                 </div>
             );
         })
