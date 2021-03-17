@@ -27,8 +27,7 @@ router.post("/", (req, res) => {
     });
     console.log("values: ", values);
 
-    const all = [];
-
+    //Entries to one_to_one table
     liables.forEach((liable) => {
         if (paid_by !== liable) {
             console.log("IN HERE");
@@ -38,15 +37,28 @@ router.post("/", (req, res) => {
                 (err, result) => {
                     if (err) {
                         console.log("error: ", err);
+                    }
+                    if (result.length === 0) {
+                        pool.query(
+                            "INSERT INTO splitwise.one_to_one (user1_id, user2_id, amount, settled) VALUES (?,?,?,?)",
+                            [paid_by, liable, amount, 0],
+                            (err, result) => {
+                                if (err) {
+                                    console.log("Error: " + err);
+                                } else {
+                                    console.log("New entry added");
+                                }
+                            }
+                        );
                     } else {
                         const db_amount = result[0].amount;
-
+                        // let settled = 0;
                         console.log(result[0].amount);
                         let new_amount = amount + db_amount;
 
                         pool.query(
-                            "UPDATE splitwise.one_to_one SET amount = ? WHERE user1_id = ? AND user2_id = ?",
-                            [new_amount, paid_by, liable],
+                            "UPDATE splitwise.one_to_one SET amount = ?, settled = ? WHERE user1_id = ? AND user2_id = ?",
+                            [new_amount, settled, paid_by, liable],
                             (err, result) => {
                                 if (err) {
                                     console.log("error: ", err);
@@ -64,8 +76,7 @@ router.post("/", (req, res) => {
         }
     });
 
-    console.log("ALL: ", all);
-
+    //Entry to expense table
     const query =
         "INSERT INTO splitwise.expenses (group_id, description, date, total_amount, paid_by, liable, amount) VALUES ?";
 

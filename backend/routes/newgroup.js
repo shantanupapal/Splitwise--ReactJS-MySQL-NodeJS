@@ -17,36 +17,36 @@ router.post("/", (req, res) => {
 
     // let all_members = members_id_to_add;
     // all_members.push(creator_id);
-    const entriesTo_one_to_one = () => {
-        //Check if pair already exists
-        //if length = 0{}
-        //else {}
-        const query_one_to_one =
-            "INSERT INTO splitwise.one_to_one (user1_id, user2_id, amount, settled) VALUES ?";
-        const one_to_one_entries = [];
-        for (let i = 0; i < members_id_to_add.length; i++) {
-            for (let j = 0; j < members_id_to_add.length; j++) {
-                if (members_id_to_add[i] !== members_id_to_add[j]) {
-                    one_to_one_entries.push([
-                        members_id_to_add[i],
-                        members_id_to_add[j],
-                        0,
-                        1,
-                    ]);
-                }
-            }
-        }
+    // const entriesTo_one_to_one = () => {
+    //     //Check if pair already exists
+    //     //if length = 0{}
+    //     //else {}
+    //     const query_one_to_one =
+    //         "INSERT INTO splitwise.one_to_one (user1_id, user2_id, amount, settled) VALUES ?";
+    //     const one_to_one_entries = [];
+    //     for (let i = 0; i < members_id_to_add.length; i++) {
+    //         for (let j = 0; j < members_id_to_add.length; j++) {
+    //             if (members_id_to_add[i] !== members_id_to_add[j]) {
+    //                 one_to_one_entries.push([
+    //                     members_id_to_add[i],
+    //                     members_id_to_add[j],
+    //                     0,
+    //                     1,
+    //                 ]);
+    //             }
+    //         }
+    //     }
 
-        console.log(one_to_one_entries);
+    //     console.log(one_to_one_entries);
 
-        pool.query(query_one_to_one, [one_to_one_entries], (err, result) => {
-            if (err) {
-                console.log("error: ", err);
-            } else {
-                console.log("Added to one_to_one");
-            }
-        });
-    };
+    //     pool.query(query_one_to_one, [one_to_one_entries], (err, result) => {
+    //         if (err) {
+    //             console.log("error: ", err);
+    //         } else {
+    //             console.log("Added to one_to_one");
+    //         }
+    //     });
+    // };
 
     const values = [];
     var count_of_groups_table;
@@ -98,7 +98,7 @@ router.post("/", (req, res) => {
                                 result.affectedRows
                             );
                             //ADD to one_to_one
-                            entriesTo_one_to_one();
+                            // entriesTo_one_to_one();
                         }
                     });
                 } else {
@@ -151,7 +151,7 @@ router.post("/", (req, res) => {
                                             result.affectedRows
                                         );
 
-                                        entriesTo_one_to_one();
+                                        // entriesTo_one_to_one();
                                         res.status(200).end(
                                             "Group created successfully"
                                         );
