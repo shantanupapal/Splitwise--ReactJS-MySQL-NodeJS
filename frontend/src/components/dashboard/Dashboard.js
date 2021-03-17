@@ -33,28 +33,95 @@ class Dashboard extends Component {
             i_owe.map((ower) => {
                 console.log(ower[0]);
                 return (
-                    <div key={ower[0]}>
-                        Amount: {Math.abs(ower[1])}
-                        Name: {ower[2]}
+                    <div
+                        key={ower[0]}
+                        style={{
+                            padding: "7px 13px 7px 13px",
+                            marginLeft: "2px",
+                            textAlign: "right",
+                        }}
+                    >
+                        <span style={{ fontSize: "20px" }}>{ower[2]}</span>
+                        <br />
+                        <span
+                            style={{
+                                fontSize: "17px",
+                                lineHeight: "20px",
+                                color: "#ff652f",
+                            }}
+                        >
+                            you owe
+                        </span>{" "}
+                        <span
+                            style={{
+                                fontSize: "20px",
+                                color: "#ff652f",
+                                fontWeight: "bold",
+                            }}
+                        >
+                            {Math.abs(ower[1])}
+                        </span>
                     </div>
                 );
             })
         ) : (
-            <div>You owe nothing</div>
+            <div
+                style={{
+                    color: "#999",
+                    marginTop: "6px",
+                    fontSize: "16px",
+                }}
+            >
+                You do not owe anything
+            </div>
         );
 
         const show_they_owe = they_owe.length ? (
             they_owe.map((ower) => {
-                console.log(ower[0]);
+                // console.log(ower[0]);
                 return (
-                    <div key={ower[0]}>
-                        Amount: {ower[1]}
-                        Name: {ower[2]}
+                    <div
+                        key={ower[0]}
+                        style={{
+                            padding: "7px 13px 7px 13px",
+                            marginLeft: "2px",
+                            textAlign: "left",
+                        }}
+                    >
+                        <span style={{ fontSize: "20px" }}>{ower[2]}</span>
+                        <br />
+                        <span
+                            style={{
+                                fontSize: "17px",
+                                lineHeight: "20px",
+                                color: "#5bc5a7",
+                            }}
+                        >
+                            owes you
+                        </span>{" "}
+                        <span
+                            style={{
+                                fontSize: "20px",
+                                color: "#5bc5a7",
+                                fontWeight: "bold",
+                            }}
+                        >
+                            {Math.abs(ower[1])}
+                        </span>
                     </div>
                 );
             })
         ) : (
-            <div>They owe nothing</div>
+            <div
+                className="container"
+                style={{
+                    color: "#999",
+                    marginTop: "6px",
+                    fontSize: "16px",
+                }}
+            >
+                Other's owe nothing to you
+            </div>
         );
 
         i_owe.forEach((ower) => {
@@ -83,21 +150,66 @@ class Dashboard extends Component {
                     <div className="row align-items-center">
                         <div
                             className="col"
-                            style={{ borderRight: "1px solid  #ddd" }}
+                            style={{
+                                borderRight: "1px solid  #ddd",
+                                color: "#999",
+                                fontSize: "16px",
+                            }}
                         >
                             {" "}
                             you owe
                             <div>{Math.abs(i_owe_total)}</div>
                         </div>
 
-                        <div className="col">
+                        <div
+                            className="col"
+                            style={{
+                                color: "#999",
+                                fontSize: "16px",
+                            }}
+                        >
                             {" "}
                             you are owed <div>{Math.abs(they_owe_total)}</div>
                         </div>
                     </div>
                 </div>
-                <div>{show_i_owe}</div>
-                <div>{show_they_owe}</div>
+                <div className="container">
+                    <div className="row align-items-top">
+                        <div
+                            className="col"
+                            style={{
+                                borderRight: " 2px solid #eee",
+                            }}
+                        >
+                            <div
+                                style={{
+                                    float: "left",
+                                    color: "#999999",
+                                    fontWeight: "bold",
+                                    padding: "10px",
+                                }}
+                            >
+                                YOU OWE
+                            </div>
+                            <br />
+                            <div>{show_i_owe}</div>
+                        </div>
+                        <div className="col">
+                            <div
+                                style={{
+                                    float: "right",
+                                    color: "#999999",
+                                    fontWeight: "bold",
+                                    padding: "10px",
+                                }}
+                            >
+                                YOU ARE OWED
+                            </div>
+                            <br />
+                            <div>{show_they_owe}</div>
+                        </div>
+                    </div>
+                </div>
             </div>
         );
     }
