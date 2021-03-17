@@ -197,11 +197,21 @@
     background: #fff;
     min-height: auto;
     display: block;
+    /* box-shadow: 1px 1px 1px 1px rgb(55 59 63 / 50%); */
 }
 
 .dashboardHeader {
-    padding: 0;
-    height: 50px;
+    padding: 15px;
+    height: auto;
+    border-bottom: 1px solid #ddd;
+    position: relative;
+    background: #eee;
+    /* justify-content: center; */
+}
+
+.dashboardHeader2 {
+    padding: 10px;
+    height: auto;
     border-bottom: 1px solid #ddd;
     position: relative;
     background: #eee;

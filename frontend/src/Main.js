@@ -21,8 +21,16 @@ class Main extends Component {
                 <Route path="/Center" component={Center} />
                 <Route path="/NewGroup" component={NewGroup} />
                 <Route path="/ProfilePage" component={ProfilePage} />
-                <Route path="/MyGroupsCenter" component={MyGroupsCenter} />
-                <Route path="/:group_id" component={GroupById}></Route>
+                <Route
+                    exact
+                    path="/MyGroupsCenter"
+                    component={MyGroupsCenter}
+                />
+                <Route
+                    exact
+                    path="/groups/:group_id"
+                    component={GroupById}
+                ></Route>
             </Switch>
         );
     }

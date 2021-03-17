@@ -32,13 +32,13 @@ class Center extends Component {
                 <MainNavbar />
                 <div className="container-fluid text-center">
                     <div className="row content align-items-center">
-                        <div className="col-xl-2">
+                        <div className="col-xl-3">
                             <LeftSideBar />
                         </div>
-                        <div className="col-xl-8">
+                        <div className="col-xl-6">
                             <Dashboard />
                         </div>
-                        <div className="col-xl-2"></div>
+                        <div className="col-xl-3"></div>
                     </div>
                 </div>
             </div>

@@ -15,7 +15,7 @@ const MyGroups = ({ myGroups, myPendingGroups, acceptGroup }) => {
                         onClick={() => {
                             groupToLS(group.groupname);
                         }}
-                        to={"/" + group.group_id}
+                        to={"/groups/" + group.group_id}
                         style={{ textDecoration: "None", color: "white" }}
                     >
                         <div>

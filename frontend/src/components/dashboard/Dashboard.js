@@ -1,7 +1,69 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import Axios from "axios";
+import backServer from "../../webConfig";
 class Dashboard extends Component {
+    state = {
+        i_owe: [],
+        they_owe: [],
+    };
+    componentDidMount = () => {
+        const user_id = parseInt(localStorage.getItem("user_id"));
+        console.log("Hello");
+        Axios.post(`${backServer}/dashboarddetails `, { user_id: user_id })
+            .then((response) => {
+                console.log("got response", response.data.i_owe);
+                this.setState({
+                    i_owe: response.data.i_owe,
+                    they_owe: response.data.they_owe,
+                });
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    };
+
     render() {
+        const i_owe = this.state.i_owe;
+        const they_owe = this.state.they_owe;
+        let i_owe_total = 0;
+        let they_owe_total = 0;
+        console.log(i_owe);
+        const show_i_owe = i_owe.length ? (
+            i_owe.map((ower) => {
+                console.log(ower[0]);
+                return (
+                    <div key={ower[0]}>
+                        Amount: {Math.abs(ower[1])}
+                        Name: {ower[2]}
+                    </div>
+                );
+            })
+        ) : (
+            <div>You owe nothing</div>
+        );
+
+        const show_they_owe = they_owe.length ? (
+            they_owe.map((ower) => {
+                console.log(ower[0]);
+                return (
+                    <div key={ower[0]}>
+                        Amount: {ower[1]}
+                        Name: {ower[2]}
+                    </div>
+                );
+            })
+        ) : (
+            <div>They owe nothing</div>
+        );
+
+        i_owe.forEach((ower) => {
+            i_owe_total = i_owe_total + ower[1];
+        });
+        they_owe.forEach((ower) => {
+            they_owe_total = they_owe_total + ower[1];
+        });
+
         return (
             <div className="centerOfPage">
                 <div className="container dashboardHeader">
@@ -17,6 +79,25 @@ class Dashboard extends Component {
                         </div>
                     </div>
                 </div>
+                <div className="container dashboardHeader2">
+                    <div className="row align-items-center">
+                        <div
+                            className="col"
+                            style={{ borderRight: "1px solid  #ddd" }}
+                        >
+                            {" "}
+                            you owe
+                            <div>{Math.abs(i_owe_total)}</div>
+                        </div>
+
+                        <div className="col">
+                            {" "}
+                            you are owed <div>{Math.abs(they_owe_total)}</div>
+                        </div>
+                    </div>
+                </div>
+                <div>{show_i_owe}</div>
+                <div>{show_they_owe}</div>
             </div>
         );
     }

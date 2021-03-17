@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import Dashboard from "./dashboard/Dashboard";
 import LeftSideBar from "./layout/LeftSideBar";
 import MainNavbar from "./layout/MainNavbar";
 import { connect } from "react-redux";

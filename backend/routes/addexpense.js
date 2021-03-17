@@ -57,8 +57,8 @@ router.post("/", (req, res) => {
                         let new_amount = amount + db_amount;
 
                         pool.query(
-                            "UPDATE splitwise.one_to_one SET amount = ?, settled = ? WHERE user1_id = ? AND user2_id = ?",
-                            [new_amount, settled, paid_by, liable],
+                            "UPDATE splitwise.one_to_one SET amount = ? WHERE user1_id = ? AND user2_id = ?",
+                            [new_amount, paid_by, liable],
                             (err, result) => {
                                 if (err) {
                                     console.log("error: ", err);

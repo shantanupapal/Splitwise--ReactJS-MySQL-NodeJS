@@ -13,6 +13,7 @@ const usergroups = require("./routes/usergroups");
 const acceptgroupinvite = require("./routes/acceptgroupinvite");
 const getallgroupmembers = require("./routes/getallgroupmembers");
 const addexpense = require("./routes/addexpense");
+const dashboarddetails = require("./routes/dashboarddetails");
 
 app.use("/login", login);
 app.use("/signup", signup);
@@ -27,6 +28,7 @@ app.use("/usergroups", usergroups);
 app.use("/acceptgroupinvite", acceptgroupinvite);
 app.use("/getallgroupmembers", getallgroupmembers);
 app.use("/addexpense", addexpense);
+app.use("/dashboarddetails", dashboarddetails);
 
 app.listen(3001, () => {
     console.log("Running on 3001");
