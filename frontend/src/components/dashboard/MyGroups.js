@@ -2,8 +2,9 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const MyGroups = ({ myGroups, myPendingGroups, acceptGroup }) => {
-    const groupToLS = (name) => {
+    const groupToLS = (name, id) => {
         localStorage.setItem("group_name", name);
+        localStorage.setItem("group_id", id);
     };
     const groupsList = myGroups.length ? (
         myGroups.map((group) => {
@@ -11,7 +12,7 @@ const MyGroups = ({ myGroups, myPendingGroups, acceptGroup }) => {
                 <div key={group.group_id} className={"groupItem"}>
                     <Link
                         onClick={() => {
-                            groupToLS(group.groupname);
+                            groupToLS(group.groupname, group.group_id);
                         }}
                         to={"/groups/" + group.group_id}
                         style={{ textDecoration: "None", color: "white" }}

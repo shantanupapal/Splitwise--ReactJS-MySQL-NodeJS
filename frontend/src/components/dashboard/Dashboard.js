@@ -72,7 +72,7 @@ class Dashboard extends Component {
                                 fontWeight: "bold",
                             }}
                         >
-                            {Math.abs(ower[1])}
+                            {Math.abs(ower[1]).toFixed(2)}
                         </span>
                     </div>
                 );
@@ -131,7 +131,7 @@ class Dashboard extends Component {
                                 fontWeight: "bold",
                             }}
                         >
-                            {Math.abs(ower[1])}
+                            {Math.abs(ower[1]).toFixed(2)}
                         </span>
                     </div>
                 );
@@ -183,7 +183,7 @@ class Dashboard extends Component {
                         >
                             {" "}
                             you owe <br />
-                            <div>{Math.abs(i_owe_total)}</div>
+                            <div>{Math.abs(i_owe_total).toFixed(2)}</div>
                         </div>
 
                         <div
@@ -194,7 +194,8 @@ class Dashboard extends Component {
                             }}
                         >
                             {" "}
-                            you are owed <div>{Math.abs(they_owe_total)}</div>
+                            you are owed{" "}
+                            <div>{Math.abs(they_owe_total).toFixed(2)}</div>
                         </div>
                     </div>
                 </div>

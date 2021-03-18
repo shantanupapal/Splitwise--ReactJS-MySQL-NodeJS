@@ -7,6 +7,8 @@ import Axios from "axios";
 import backServer from "../../webConfig";
 import { Modal, Button } from "react-bootstrap";
 import noexpenses from "../../images/noexpenses.png";
+import swal from "sweetalert";
+import RightSideBar from "../layout/RightSideBar";
 
 class GroupById extends Component {
     state = {
@@ -35,6 +37,7 @@ class GroupById extends Component {
     handleSubmit = (e) => {
         e.preventDefault();
         console.log("state: ", this.state);
+        // swal("Done", "Expense Added");
         //call expenses table to add expense
         const group_id = this.state.id;
         const description = this.state.expense_description;
@@ -51,6 +54,7 @@ class GroupById extends Component {
         })
             .then((response) => {
                 console.log("response: ", response);
+                swal("Done", "Expense Added");
             })
             .catch((err) => {
                 console.log("Error: ", err);
@@ -92,7 +96,7 @@ class GroupById extends Component {
                 const all_expenses = [];
                 responses[1].data.forEach((expense) => {
                     all_expenses.push([
-                        expense.date,
+                        expense.fullDate,
                         expense.description,
                         expense.name,
                         expense.total_amount,
@@ -250,7 +254,7 @@ class GroupById extends Component {
             <div>
                 <MainNavbar />
                 <div className="container-fluid text-center">
-                    <div className="row content align-items-center">
+                    <div className="row content align-items-top">
                         <div className="col-xl-3">
                             <LeftSideBar />
                         </div>
@@ -259,6 +263,7 @@ class GroupById extends Component {
                             style={{
                                 boxShadow: "0 0 12px rgb(0 0 0 / 20%)",
                                 height: "100%",
+                                zIndex: "100",
                             }}
                         >
                             <div className="centerOfPage">
@@ -411,7 +416,9 @@ class GroupById extends Component {
                                 <div>{show_expenses}</div>
                             </div>
                         </div>
-                        <div className="col-xl-3"></div>
+                        <div className="col-xl-3" style={{ marginTop: "50px" }}>
+                            <RightSideBar />
+                        </div>
                     </div>
                 </div>
             </div>

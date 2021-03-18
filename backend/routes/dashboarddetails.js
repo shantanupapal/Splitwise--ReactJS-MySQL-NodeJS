@@ -54,9 +54,6 @@ router.post("/", (req, res) => {
                                 payers.forEach((payer) => {
                                     if (borrower[1] === payer[0]) {
                                         if (borrower[2] - payer[2] === 0) {
-                                            // console.log(borrower[0]);
-                                            // console.log(payer[0]);
-                                            // console.log(borrower[2] - payer[2]);
                                             console.log("equal");
                                             //Settled = 1
                                             pool.query(
@@ -141,15 +138,6 @@ router.post("/", (req, res) => {
                                                     }
                                                 });
                                             });
-
-                                            // console.log(
-                                            //     "i_owe_total: ",
-                                            //     i_owe_total
-                                            // );
-                                            // console.log(
-                                            //     "they_owe_total: ",
-                                            //     they_owe_total
-                                            // );
 
                                             let dashboard_details = {
                                                 i_owe: i_owe,
