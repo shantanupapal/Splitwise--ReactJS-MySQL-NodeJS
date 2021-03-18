@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import Axios from "axios";
 import backServer from ".././webConfig";
+
 class Center extends Component {
     componentDidMount = () => {
         // const { loggedIn } = this.props;

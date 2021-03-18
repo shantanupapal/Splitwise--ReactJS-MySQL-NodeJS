@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import Axios from "axios";
 import backServer from "../../webConfig";
+import profilePhoto from "../../images/profilePhoto.png";
 class Dashboard extends Component {
     state = {
         i_owe: [],
@@ -39,8 +40,19 @@ class Dashboard extends Component {
                             padding: "7px 13px 7px 13px",
                             marginLeft: "2px",
                             textAlign: "right",
+                            borderBottom: "1px solid #eee",
                         }}
                     >
+                        <img
+                            src={profilePhoto}
+                            alt=""
+                            style={{
+                                width: "30px",
+                                height: "30px",
+                                borderRadius: "16px",
+                                marginRight: "15px",
+                            }}
+                        />
                         <span style={{ fontSize: "20px" }}>{ower[2]}</span>
                         <br />
                         <span
@@ -48,6 +60,7 @@ class Dashboard extends Component {
                                 fontSize: "17px",
                                 lineHeight: "20px",
                                 color: "#ff652f",
+                                paddingLeft: "45px",
                             }}
                         >
                             you owe
@@ -68,7 +81,7 @@ class Dashboard extends Component {
             <div
                 style={{
                     color: "#999",
-                    marginTop: "6px",
+                    marginTop: "20px",
                     fontSize: "16px",
                 }}
             >
@@ -86,8 +99,19 @@ class Dashboard extends Component {
                             padding: "7px 13px 7px 13px",
                             marginLeft: "2px",
                             textAlign: "left",
+                            borderBottom: "1px solid #eee",
                         }}
                     >
+                        <img
+                            src={profilePhoto}
+                            alt=""
+                            style={{
+                                width: "30px",
+                                height: "30px",
+                                borderRadius: "16px",
+                                marginRight: "15px",
+                            }}
+                        />
                         <span style={{ fontSize: "20px" }}>{ower[2]}</span>
                         <br />
                         <span
@@ -95,6 +119,7 @@ class Dashboard extends Component {
                                 fontSize: "17px",
                                 lineHeight: "20px",
                                 color: "#5bc5a7",
+                                paddingLeft: "45px",
                             }}
                         >
                             owes you
@@ -116,7 +141,7 @@ class Dashboard extends Component {
                 className="container"
                 style={{
                     color: "#999",
-                    marginTop: "6px",
+                    marginTop: "20px",
                     fontSize: "16px",
                 }}
             >
@@ -151,13 +176,13 @@ class Dashboard extends Component {
                         <div
                             className="col"
                             style={{
-                                borderRight: "1px solid  #ddd",
+                                borderRight: "1px solid #ddd",
                                 color: "#999",
                                 fontSize: "16px",
                             }}
                         >
                             {" "}
-                            you owe
+                            you owe <br />
                             <div>{Math.abs(i_owe_total)}</div>
                         </div>
 

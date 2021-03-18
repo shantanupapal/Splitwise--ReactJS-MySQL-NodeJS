@@ -98,7 +98,13 @@ class MyGroupsCenter extends Component {
                         <div className="col-xl-3">
                             <LeftSideBar />
                         </div>
-                        <div className="col-xl-6">
+                        <div
+                            className="col-xl-6"
+                            style={{
+                                boxShadow: "0 0 12px rgb(0 0 0 / 20%)",
+                                height: "100%",
+                            }}
+                        >
                             <MyGroups
                                 myGroups={this.state.myGroups}
                                 myPendingGroups={this.state.myPendingGroups}

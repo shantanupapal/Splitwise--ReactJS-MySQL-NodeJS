@@ -1,11 +1,10 @@
-import React, { Component, useState } from "react";
+import React, { Component } from "react";
 import LeftSideBar from "../layout/LeftSideBar";
 import MainNavbar from "../layout/MainNavbar";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import Axios from "axios";
 import backServer from "../../webConfig";
-import MyGroups from "../dashboard/MyGroups";
 import { Modal, Button } from "react-bootstrap";
 import noexpenses from "../../images/noexpenses.png";
 
@@ -16,6 +15,7 @@ class GroupById extends Component {
         expense_description: null,
         expense_amount: null,
         members: [],
+        all_expenses: [],
     };
 
     handleClose = () => {
@@ -62,35 +62,156 @@ class GroupById extends Component {
         console.log(this.props);
         let id = this.props.match.params.group_id;
         this.setState({ id: id });
-        //Get all group members
-        Axios.post(`${backServer}/getallgroupmembers`, {
-            group_id: id,
-        })
-            .then((response) => {
-                console.log("resopnse: ", response.data);
+
+        const request_for_members = Axios.post(
+            `${backServer}/getallgroupmembers`,
+            {
+                group_id: id,
+            }
+        );
+        const request_for_allExpenses = Axios.post(
+            `${backServer}/getgroupexpenses`,
+            {
+                group_id: id,
+            }
+        );
+
+        Axios.all([request_for_members, request_for_allExpenses]).then(
+            Axios.spread((...responses) => {
+                console.log("resopnse: ", responses[0].data);
+                //Get all group members
                 const members = [];
-                response.data.forEach((member) => {
+                responses[0].data.forEach((member) => {
                     members.push(member.user_id);
                 });
                 this.setState({
                     members: members,
                 });
+                //Get all group expenses
+                console.log("alll expenses: ", responses[1].data);
+                const all_expenses = [];
+                responses[1].data.forEach((expense) => {
+                    all_expenses.push([
+                        expense.date,
+                        expense.description,
+                        expense.name,
+                        expense.total_amount,
+                    ]);
+                });
+                this.setState({
+                    all_expenses: all_expenses,
+                });
             })
-            .catch((err) => {
-                console.log("Error: ", err);
-            });
-        //Fetch all group details here
+        );
+
+        // //Get all group members
+        // Axios.post(`${backServer}/getallgroupmembers`, {
+        //     group_id: id,
+        // })
+        //     .then((response) => {
+        //         console.log("resopnse: ", response.data);
+        // const members = [];
+        // response.data.forEach((member) => {
+        //     members.push(member.user_id);
+        // });
+        // this.setState({
+        //     members: members,
+        // });
+        //     })
+        //     .then(() => {
+        //         // Axios.post(`${backServer}/getgroupexpenses`, {
+        //         //     group_id: id,
+        //         // })
+        //         //     .then((response) => {
+        //         //         console.log("alll expenses: ", response.data);
+        //         //         const all_expenses = [];
+        //         //         response.data.forEach((expense) => {
+        //         //             all_expenses.push([expense.user_id]);
+        //         //         });
+        //         //         this.setState({
+        //         //             all_expenses: all_expenses,
+        //         //         });
+        //         //     })
+        //         //     .catch((error) => {
+        //         //         console.log(error);
+        //         //     });
+        //     })
+        //     .catch((err) => {
+        //         console.log("Error: ", err);
+        //     });
+
+        // //Fetch all group details here
+        // Axios.post(`${backServer}/getgroupexpenses`, {
+        //     group_id: id,
+        // })
+        //     .then((response) => {
+        //         console.log("alll expenses: ", response.data);
+        // const all_expenses = [];
+        // response.data.forEach((expense) => {
+        //     all_expenses.push([expense.user_id]);
+        // });
+        // this.setState({
+        //     all_expenses: all_expenses,
+        // });
+        //     })
+        //     .catch((error) => {
+        //         console.log(error);
+        //     });
     };
 
     render() {
-        // console.log("Props");
-        // console.log(this.props);
         const { loggedIn } = this.props;
         if (!loggedIn) return <Redirect to="/Login" />;
         const groupname = localStorage.getItem("group_name");
-        const tempFlag = 0;
-        const expenses = tempFlag ? (
-            <div></div>
+        const all_expenses = this.state.all_expenses;
+        const show_expenses = all_expenses.length ? (
+            all_expenses.map((expense) => {
+                return (
+                    <div
+                        className="container"
+                        style={{
+                            borderBottom: "1px solid #eee",
+                            lineHeight: "60px",
+                            alignContent: "center",
+                            padding: "8px",
+                        }}
+                    >
+                        <div className="row align-items-center">
+                            <div
+                                className="col-sm-4"
+                                style={{
+                                    color: "#aaa",
+                                    borderRight: "1px solid #eee",
+                                }}
+                            >
+                                {expense[0]}
+                            </div>
+                            <div
+                                className="col-sm-4 d-flex align-items-start"
+                                style={{
+                                    fontSize: "20px",
+                                    fontWeight: "bold",
+                                }}
+                            >
+                                {expense[1]}
+                            </div>
+                            <div className="col-sm-4">
+                                <span style={{ color: "#aaa" }}>
+                                    {expense[2]} paid{" "}
+                                </span>
+                                <span
+                                    style={{
+                                        fontSize: "20px",
+                                        fontWeight: "bold",
+                                    }}
+                                >
+                                    INR{expense[3]}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                );
+            })
         ) : (
             <div className="container" style={{ paddingTop: "15px" }}>
                 <div className="row">
@@ -133,7 +254,13 @@ class GroupById extends Component {
                         <div className="col-xl-3">
                             <LeftSideBar />
                         </div>
-                        <div className="col-xl-6">
+                        <div
+                            className="col-xl-6"
+                            style={{
+                                boxShadow: "0 0 12px rgb(0 0 0 / 20%)",
+                                height: "100%",
+                            }}
+                        >
                             <div className="centerOfPage">
                                 <div className="container dashboardHeader">
                                     <div className="row align-items-center">
@@ -281,7 +408,7 @@ class GroupById extends Component {
                                         </div>
                                     </div>
                                 </div>
-                                <div>{expenses}</div>
+                                <div>{show_expenses}</div>
                             </div>
                         </div>
                         <div className="col-xl-3"></div>
