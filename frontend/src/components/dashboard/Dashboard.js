@@ -13,13 +13,31 @@ class Dashboard extends Component {
         console.log("Hello");
         Axios.post(`${backServer}/dashboarddetails `, { user_id: user_id })
             .then((response) => {
-                console.log("got response", response.data.i_owe);
-                this.setState({
-                    i_owe: response.data.i_owe,
-                    they_owe: response.data.they_owe,
-                });
-                localStorage.setItem("i_owe", response.data.i_owe);
-                localStorage.setItem("they_owe", response.data.they_owe);
+                if (response.status === 201) {
+                    console.log("got response", response.data.they_owe);
+                    this.setState({
+                        they_owe: response.data.they_owe,
+                    });
+
+                    localStorage.setItem("they_owe", response.data.they_owe);
+                }
+                if (response.status === 202) {
+                    console.log("got response", response.data.i_owe);
+                    this.setState({
+                        i_owe: response.data.i_owe,
+                    });
+
+                    localStorage.setItem("they_owe", response.data.they_owe);
+                }
+                if (response.status === 200) {
+                    console.log("got response", response.data.i_owe);
+                    this.setState({
+                        i_owe: response.data.i_owe,
+                        they_owe: response.data.they_owe,
+                    });
+                    localStorage.setItem("i_owe", response.data.i_owe);
+                    localStorage.setItem("they_owe", response.data.they_owe);
+                }
             })
             .catch((err) => {
                 console.log(err);

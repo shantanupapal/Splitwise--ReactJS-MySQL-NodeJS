@@ -8,6 +8,7 @@ router.post("/", (req, res) => {
     user_id_photochange = user_id;
     console.log(user_id);
     console.log(user_id_photochange);
+    res.status(200).end("userId changed");
 });
 
 module.exports = router;

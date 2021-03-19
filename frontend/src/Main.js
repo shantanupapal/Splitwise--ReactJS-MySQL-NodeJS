@@ -8,6 +8,7 @@ import NewGroup from "./components/dashboard/NewGroup";
 import ProfilePage from "./components/dashboard/ProfilePage";
 import MyGroupsCenter from "./components/MyGroupsCenter";
 import GroupById from "./components/dashboard/GroupById";
+import RecentActivity from "./components/dashboard/RecentActivity";
 
 //Create a Main Component
 class Main extends Component {
@@ -31,6 +32,7 @@ class Main extends Component {
                     path="/groups/:group_id"
                     component={GroupById}
                 ></Route>
+                <Route path="/RecentActivity" component={RecentActivity} />
             </Switch>
         );
     }

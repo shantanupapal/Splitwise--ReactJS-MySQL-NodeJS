@@ -20,6 +20,7 @@ router.post("/", (req, res) => {
             }
             if (result.length === 0) {
                 console.log("No users found");
+                res.status(200).send(JSON.stringify(result));
             }
             if (result.length > 0) {
                 console.log(result);

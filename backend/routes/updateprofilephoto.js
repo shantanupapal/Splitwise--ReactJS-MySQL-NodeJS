@@ -11,7 +11,7 @@ const app = require("../app");
 
 router.post("/", upload.single("profilephoto"), function (req, res, next) {
     if (req.files) {
-        console.log("this is it", user_id_photochange);
+        console.log("id: ", user_id_photochange);
         // const {
         //     profilephoto,
         //     body: { name },

@@ -84,6 +84,12 @@ const ProfilePage = () => {
         Axios.post(`${backServer}/changeuserid`, { user_id: user_id }).then(
             (response) => {
                 console.log(response);
+                Axios.post(`${backServer}/updateprofilephoto`, data).then(
+                    (response) => {
+                        console.log(response.data);
+                        localStorage.setItem("profilephoto", response.data);
+                    }
+                );
             }
         );
 
@@ -92,12 +98,7 @@ const ProfilePage = () => {
         data.append("user_id", user_id);
 
         console.log(data);
-        Axios.post(`${backServer}/updateprofilephoto`, data).then(
-            (response) => {
-                console.log(response.data);
-                localStorage.setItem("profilephoto", response.data);
-            }
-        );
+
         // Axios.post("https://httpbin.org/anything", data)
         //     .then((response) => {
         //         console.log(response);

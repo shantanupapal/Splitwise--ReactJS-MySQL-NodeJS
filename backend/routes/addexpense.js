@@ -4,12 +4,18 @@ const pool = require("../pool");
 
 router.post("/", (req, res) => {
     const group_id = parseInt(req.body.group_id);
+    console.log("AE group_id", group_id);
     const description = req.body.description;
+    console.log("AE description", description);
     const date = new Date();
     const total_amount = parseFloat(req.body.total_amount);
+    console.log("AE total_amount", total_amount);
     const paid_by = req.body.paid_by;
+    console.log("AE paid_by", paid_by);
     const liables = req.body.liables;
+    console.log("AE liables", liables);
     const amount = total_amount / liables.length;
+    console.log("AE amount", amount);
     const values = [];
 
     liables.forEach((liable) => {

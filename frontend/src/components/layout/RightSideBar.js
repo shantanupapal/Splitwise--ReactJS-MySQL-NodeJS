@@ -8,6 +8,7 @@ class RightSideBar extends Component {
 
     componentDidMount = () => {
         const group_id = parseInt(localStorage.getItem("group_id"));
+
         const payers_balances = [];
         const borrowers_balances = [];
         // console.log(group_id);
@@ -38,6 +39,7 @@ class RightSideBar extends Component {
             });
     };
     render() {
+        const currency = localStorage.getItem("currency").split(" ")[0];
         const borrowers_balances = this.state.borrowers_balances;
         const payers_balances = this.state.payers_balances;
         const payers = payers_balances.length ? (
@@ -71,6 +73,7 @@ class RightSideBar extends Component {
                                 fontWeight: "bold",
                             }}
                         >
+                            {currency}
                             {Math.abs(payer[1]).toFixed(2)}
                         </span>
                     </div>
@@ -110,6 +113,7 @@ class RightSideBar extends Component {
                                 fontWeight: "bold",
                             }}
                         >
+                            {currency}
                             {Math.abs(borrower[1]).toFixed(2)}
                         </span>
                     </div>

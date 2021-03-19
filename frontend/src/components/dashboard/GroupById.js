@@ -67,82 +67,87 @@ class GroupById extends Component {
         let id = this.props.match.params.group_id;
         this.setState({ id: id });
 
-        const request_for_members = Axios.post(
-            `${backServer}/getallgroupmembers`,
-            {
-                group_id: id,
-            }
-        );
-        const request_for_allExpenses = Axios.post(
-            `${backServer}/getgroupexpenses`,
-            {
-                group_id: id,
-            }
-        );
+        // const request_for_members = Axios.post(
+        //     `${backServer}/getallgroupmembers`,
+        //     {
+        //         group_id: id,
+        //     }
+        // );
+        // const request_for_allExpenses = Axios.post(
+        //     `${backServer}/getgroupexpenses`,
+        //     {
+        //         group_id: id,
+        //     }
+        // );
 
-        Axios.all([request_for_members, request_for_allExpenses]).then(
-            Axios.spread((...responses) => {
-                console.log("resopnse: ", responses[0].data);
-                //Get all group members
+        // Axios.all([request_for_members, request_for_allExpenses]).then(
+        //     Axios.spread((...responses) => {
+        //         console.log("resopnse: ", responses[0].data);
+        //         //Get all group members
+        //         const members = [];
+        //         responses[0].data.forEach((member) => {
+        //             members.push(member.user_id);
+        //         });
+        //         this.setState({
+        //             members: members,
+        //         });
+        //         //Get all group expenses
+        //         console.log("alll expenses: ", responses[1].data);
+        //         const all_expenses = [];
+        //         responses[1].data.forEach((expense) => {
+        // all_expenses.push([
+        //     expense.fullDate,
+        //     expense.description,
+        //     expense.name,
+        //     expense.total_amount,
+        // ]);
+        //         });
+        //         this.setState({
+        //             all_expenses: all_expenses,
+        //         });
+        //     })
+        // );
+
+        // //Get all group members
+        Axios.post(`${backServer}/getallgroupmembers`, {
+            group_id: id,
+        })
+            .then((response) => {
+                console.log("resopnse: ", response.data);
                 const members = [];
-                responses[0].data.forEach((member) => {
+                response.data.forEach((member) => {
                     members.push(member.user_id);
                 });
                 this.setState({
                     members: members,
                 });
-                //Get all group expenses
-                console.log("alll expenses: ", responses[1].data);
-                const all_expenses = [];
-                responses[1].data.forEach((expense) => {
-                    all_expenses.push([
-                        expense.fullDate,
-                        expense.description,
-                        expense.name,
-                        expense.total_amount,
-                    ]);
-                });
-                this.setState({
-                    all_expenses: all_expenses,
-                });
             })
-        );
-
-        // //Get all group members
-        // Axios.post(`${backServer}/getallgroupmembers`, {
-        //     group_id: id,
-        // })
-        //     .then((response) => {
-        //         console.log("resopnse: ", response.data);
-        // const members = [];
-        // response.data.forEach((member) => {
-        //     members.push(member.user_id);
-        // });
-        // this.setState({
-        //     members: members,
-        // });
-        //     })
-        //     .then(() => {
-        //         // Axios.post(`${backServer}/getgroupexpenses`, {
-        //         //     group_id: id,
-        //         // })
-        //         //     .then((response) => {
-        //         //         console.log("alll expenses: ", response.data);
-        //         //         const all_expenses = [];
-        //         //         response.data.forEach((expense) => {
-        //         //             all_expenses.push([expense.user_id]);
-        //         //         });
-        //         //         this.setState({
-        //         //             all_expenses: all_expenses,
-        //         //         });
-        //         //     })
-        //         //     .catch((error) => {
-        //         //         console.log(error);
-        //         //     });
-        //     })
-        //     .catch((err) => {
-        //         console.log("Error: ", err);
-        //     });
+            .then(() => {
+                Axios.post(`${backServer}/getgroupexpenses`, {
+                    group_id: id,
+                })
+                    .then((response) => {
+                        console.log("alll expenses: ", response.data);
+                        const all_expenses = [];
+                        response.data.forEach((expense) => {
+                            all_expenses.push([
+                                expense.fullDate,
+                                expense.description,
+                                expense.name,
+                                expense.total_amount,
+                            ]);
+                        });
+                        this.setState({
+                            all_expenses: all_expenses,
+                        });
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    });
+            })
+            .catch((err) => {
+                console.log("Error: ", err);
+            });
 
         // //Fetch all group details here
         // Axios.post(`${backServer}/getgroupexpenses`, {
@@ -167,6 +172,7 @@ class GroupById extends Component {
         const { loggedIn } = this.props;
         if (!loggedIn) return <Redirect to="/Login" />;
         const groupname = localStorage.getItem("group_name");
+        const currency = localStorage.getItem("currency").split(" ")[0];
         const all_expenses = this.state.all_expenses;
         const show_expenses = all_expenses.length ? (
             all_expenses.map((expense) => {
@@ -209,7 +215,8 @@ class GroupById extends Component {
                                         fontWeight: "bold",
                                     }}
                                 >
-                                    INR{expense[3]}
+                                    {currency}
+                                    {expense[3]}
                                 </span>
                             </div>
                         </div>
