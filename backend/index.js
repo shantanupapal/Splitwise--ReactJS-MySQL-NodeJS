@@ -16,6 +16,7 @@ const addexpense = require("./routes/addexpense");
 const dashboarddetails = require("./routes/dashboarddetails");
 const getgroupexpenses = require("./routes/getgroupexpenses");
 const getgroupbalancedetails = require("./routes/getgroupbalancedetails");
+const settleup = require("./routes/settleup");
 
 app.use("/login", login);
 app.use("/signup", signup);
@@ -33,6 +34,7 @@ app.use("/addexpense", addexpense);
 app.use("/dashboarddetails", dashboarddetails);
 app.use("/getgroupexpenses", getgroupexpenses);
 app.use("/getgroupbalancedetails", getgroupbalancedetails);
+app.use("/settleup", settleup);
 
 app.listen(3001, () => {
     console.log("Running on 3001");

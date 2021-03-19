@@ -6,6 +6,7 @@ import { Redirect } from "react-router-dom";
 import Axios from "axios";
 import backServer from ".././webConfig";
 import MyGroups from "./dashboard/MyGroups";
+import swal from "sweetalert";
 class MyGroupsCenter extends Component {
     state = {
         allGroups: [],
@@ -41,6 +42,36 @@ class MyGroupsCenter extends Component {
             .catch((error) => {
                 console.log("Error: " + error);
             });
+    };
+
+    leaveGroup = (id) => {
+        const i_owe = localStorage.getItem("i_owe");
+        const they_owe = localStorage.getItem("they_owe");
+        const user_id = parseInt(localStorage.getItem("user_id"));
+
+        if (i_owe.length === 0 && they_owe.length === 0) {
+            //DELETE from group
+            Axios.post(`${backServer}/leavegroup`, {
+                user_id: user_id,
+                group_id: id,
+            })
+                .then((response) => {
+                    swal(
+                        "Group leaved successsfully. You are no longer part of this group."
+                    );
+                })
+                .catch((err) => {
+                    console.log("Error: ", err);
+                });
+        } else if (i_owe.length === 0) {
+            swal(
+                "You are owed some amount from other members. Please clear all dues and then try to leave group. Ask others to settle up."
+            );
+        } else if (they_owe.length === 0) {
+            swal(
+                "You owe some amount to other members. Please clear all dues and then try to leave group. Go and settle up from your Dashboard."
+            );
+        }
     };
 
     acceptGroup = (id) => {
@@ -109,6 +140,7 @@ class MyGroupsCenter extends Component {
                                 myGroups={this.state.myGroups}
                                 myPendingGroups={this.state.myPendingGroups}
                                 acceptGroup={this.acceptGroup}
+                                leaveGroup={this.leaveGroup}
                             />
                         </div>
                         <div className="col-xl-3"></div>

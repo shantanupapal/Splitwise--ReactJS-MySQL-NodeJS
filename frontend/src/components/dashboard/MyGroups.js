@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const MyGroups = ({ myGroups, myPendingGroups, acceptGroup }) => {
+const MyGroups = ({ myGroups, myPendingGroups, acceptGroup, leaveGroup }) => {
     const groupToLS = (name, id) => {
         localStorage.setItem("group_name", name);
         localStorage.setItem("group_id", id);
@@ -10,17 +10,40 @@ const MyGroups = ({ myGroups, myPendingGroups, acceptGroup }) => {
         myGroups.map((group) => {
             return (
                 <div key={group.group_id} className={"groupItem"}>
-                    <Link
-                        onClick={() => {
-                            groupToLS(group.groupname, group.group_id);
-                        }}
-                        to={"/groups/" + group.group_id}
-                        style={{ textDecoration: "None", color: "white" }}
-                    >
-                        <div>
-                            <span>{group.groupname}</span>
+                    <div className="container">
+                        <div className="row">
+                            <div className="col">
+                                {" "}
+                                <Link
+                                    onClick={() => {
+                                        groupToLS(
+                                            group.groupname,
+                                            group.group_id
+                                        );
+                                    }}
+                                    to={"/groups/" + group.group_id}
+                                    style={{
+                                        textDecoration: "None",
+                                        color: "white",
+                                    }}
+                                >
+                                    <div>
+                                        <span>{group.groupname}</span>
+                                    </div>
+                                </Link>
+                            </div>
+                            <div className="col">
+                                <span
+                                    className="acceptInvite"
+                                    onClick={() => {
+                                        leaveGroup(group.group_id);
+                                    }}
+                                >
+                                    Leave
+                                </span>
+                            </div>
                         </div>
-                    </Link>
+                    </div>
                 </div>
             );
         })
@@ -72,7 +95,7 @@ const MyGroups = ({ myGroups, myPendingGroups, acceptGroup }) => {
             <div className="container">
                 <div className="row align-items-top">
                     <div
-                        className="col-sm-4"
+                        className="col-sm-6"
                         style={{
                             borderRight: " 2px solid #eee",
                         }}
@@ -80,7 +103,7 @@ const MyGroups = ({ myGroups, myPendingGroups, acceptGroup }) => {
                         <div className={"categoryHeader"}>Groups</div>
                         <div>{groupsList}</div>
                     </div>
-                    <div className="col-sm-8">
+                    <div className="col-sm-6">
                         <div className={"categoryHeader"}>Invitations</div>
                         <div>{pendingGroupsList}</div>
                     </div>

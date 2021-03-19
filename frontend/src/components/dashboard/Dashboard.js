@@ -18,9 +18,23 @@ class Dashboard extends Component {
                     i_owe: response.data.i_owe,
                     they_owe: response.data.they_owe,
                 });
+                localStorage.setItem("i_owe", response.data.i_owe);
+                localStorage.setItem("they_owe", response.data.they_owe);
             })
             .catch((err) => {
                 console.log(err);
+            });
+    };
+
+    handleSettle = () => {
+        const user_id = parseInt(localStorage.getItem("user_id"));
+        console.log("user to settle: ", user_id);
+        Axios.post(`${backServer}/settleup`, {
+            user_id: user_id,
+        })
+            .then((response) => {})
+            .catch((err) => {
+                console.log("Error: ", err);
             });
     };
 
@@ -165,7 +179,10 @@ class Dashboard extends Component {
                         </div>
                         <div className="col-sm-6"></div>
                         <div className="col-sm-3">
-                            <Link to="" className="dashboardSettleUp">
+                            <Link
+                                onClick={this.handleSettle}
+                                className="dashboardSettleUp"
+                            >
                                 Settle up
                             </Link>
                         </div>
