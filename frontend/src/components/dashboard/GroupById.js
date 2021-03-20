@@ -56,6 +56,9 @@ class GroupById extends Component {
                 console.log("response: ", response);
                 swal("Done", "Expense Added");
             })
+            .then(() => {
+                // window.location.reload();
+            })
             .catch((err) => {
                 console.log("Error: ", err);
             });

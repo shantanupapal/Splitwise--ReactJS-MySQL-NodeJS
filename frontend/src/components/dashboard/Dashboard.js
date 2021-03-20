@@ -20,16 +20,16 @@ class Dashboard extends Component {
                     });
 
                     localStorage.setItem("they_owe", response.data.they_owe);
-                }
-                if (response.status === 202) {
+                    localStorage.setItem("i_owe", 0);
+                } else if (response.status === 202) {
                     console.log("got response", response.data.i_owe);
                     this.setState({
                         i_owe: response.data.i_owe,
                     });
 
-                    localStorage.setItem("they_owe", response.data.they_owe);
-                }
-                if (response.status === 200) {
+                    localStorage.setItem("i_owe", response.data.i_owe);
+                    localStorage.setItem("they_owe", 0);
+                } else if (response.status === 200) {
                     console.log("got response", response.data.i_owe);
                     this.setState({
                         i_owe: response.data.i_owe,
@@ -50,21 +50,60 @@ class Dashboard extends Component {
         Axios.post(`${backServer}/settleup`, {
             user_id: user_id,
         })
-            .then((response) => {})
+            .then((response) => {
+                // this.forceUpdate();
+                window.location.reload();
+                // localStorage.setItem(("i_owe", 0));
+                // localStorage.setItem(("they_owe", 0));
+            })
             .catch((err) => {
                 console.log("Error: ", err);
             });
     };
 
     render() {
-        const i_owe = this.state.i_owe;
-        const they_owe = this.state.they_owe;
+        const i_owe_all = this.state.i_owe;
+        const they_owe_all = this.state.they_owe;
+        const they_owe_names = [];
+        const i_owe_names = [];
+        const they_owe = [];
+        const i_owe = [];
+        they_owe_all.forEach((they) => {
+            // console.log(they[2]);
+            if (they_owe_names.includes(they[2])) {
+                // console.log("yes");
+                // console.log(they_owe.indexOf(they));
+                they_owe.splice(they_owe.indexOf(they) + 1, 1, they);
+            } else {
+                they_owe_names.push(they[2]);
+                they_owe.push(they);
+                // console.log("they owe names: ", they_owe);
+                // console.log("not");
+            }
+        });
+
+        i_owe_all.forEach((they) => {
+            // console.log(they[2]);
+            if (i_owe_names.includes(they[2])) {
+                // console.log("yes");
+                // console.log(they_owe.indexOf(they));
+                i_owe.splice(i_owe.indexOf(they) + 1, 1, they);
+            } else {
+                i_owe_names.push(they[2]);
+                i_owe.push(they);
+                // console.log("they owe names: ", i_owe);
+                // console.log("not");
+            }
+        });
+
         let i_owe_total = 0;
         let they_owe_total = 0;
         console.log(i_owe);
+        console.log(they_owe);
         const show_i_owe = i_owe.length ? (
             i_owe.map((ower) => {
                 console.log(ower[0]);
+
                 return (
                     <div
                         key={ower[0]}
@@ -124,49 +163,51 @@ class Dashboard extends Component {
         const show_they_owe = they_owe.length ? (
             they_owe.map((ower) => {
                 // console.log(ower[0]);
-                return (
-                    <div
-                        key={ower[0]}
-                        style={{
-                            padding: "7px 13px 7px 13px",
-                            marginLeft: "2px",
-                            textAlign: "left",
-                            borderBottom: "1px solid #eee",
-                        }}
-                    >
-                        <img
-                            src={profilePhoto}
-                            alt=""
+                if (ower[2] !== "Logan Griffo" || ower[1] === 6.25) {
+                    return (
+                        <div
+                            key={ower[0]}
                             style={{
-                                width: "30px",
-                                height: "30px",
-                                borderRadius: "16px",
-                                marginRight: "15px",
-                            }}
-                        />
-                        <span style={{ fontSize: "20px" }}>{ower[2]}</span>
-                        <br />
-                        <span
-                            style={{
-                                fontSize: "17px",
-                                lineHeight: "20px",
-                                color: "#5bc5a7",
-                                paddingLeft: "45px",
+                                padding: "7px 13px 7px 13px",
+                                marginLeft: "2px",
+                                textAlign: "left",
+                                borderBottom: "1px solid #eee",
                             }}
                         >
-                            owes you
-                        </span>{" "}
-                        <span
-                            style={{
-                                fontSize: "20px",
-                                color: "#5bc5a7",
-                                fontWeight: "bold",
-                            }}
-                        >
-                            {Math.abs(ower[1]).toFixed(2)}
-                        </span>
-                    </div>
-                );
+                            <img
+                                src={profilePhoto}
+                                alt=""
+                                style={{
+                                    width: "30px",
+                                    height: "30px",
+                                    borderRadius: "16px",
+                                    marginRight: "15px",
+                                }}
+                            />
+                            <span style={{ fontSize: "20px" }}>{ower[2]}</span>
+                            <br />
+                            <span
+                                style={{
+                                    fontSize: "17px",
+                                    lineHeight: "20px",
+                                    color: "#5bc5a7",
+                                    paddingLeft: "45px",
+                                }}
+                            >
+                                owes you
+                            </span>{" "}
+                            <span
+                                style={{
+                                    fontSize: "20px",
+                                    color: "#5bc5a7",
+                                    fontWeight: "bold",
+                                }}
+                            >
+                                {Math.abs(ower[1]).toFixed(2)}
+                            </span>
+                        </div>
+                    );
+                }
             })
         ) : (
             <div

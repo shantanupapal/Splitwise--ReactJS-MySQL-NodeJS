@@ -7,8 +7,8 @@ router.post("/", (req, res) => {
     console.log("user to settle:", req.body);
 
     pool.query(
-        "UPDATE splitwise.one_to_one SET amount = ?, settled = ? WHERE user2_id = ?",
-        [0, 1, user_id],
+        "UPDATE splitwise.one_to_one SET amount = ?, settled = ? WHERE user2_id = ? OR user1_id = ?",
+        [0, 1, user_id, user_id],
         (err, result) => {
             if (err) {
                 console.log(err);
@@ -18,7 +18,7 @@ router.post("/", (req, res) => {
                 res.end("Error in updating");
             } else {
                 console.log("updated");
-                // res.status(200).send(JSON.stringify(userDetails));
+                res.status(200).end("Settled Up");
             }
         }
     );

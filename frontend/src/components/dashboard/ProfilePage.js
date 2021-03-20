@@ -5,6 +5,7 @@ import "../../App.css";
 import ProfilePageNav from "../layout/ProfilePageNav";
 import Axios from "axios";
 import backServer from "../../webConfig";
+import swal from "sweetalert";
 
 const ProfilePage = () => {
     const [name, setName] = useState(localStorage.getItem("name"));
@@ -88,6 +89,8 @@ const ProfilePage = () => {
                     (response) => {
                         console.log(response.data);
                         localStorage.setItem("profilephoto", response.data);
+                        // window.location.reload();
+                        swal("Profile Photo changed");
                     }
                 );
             }

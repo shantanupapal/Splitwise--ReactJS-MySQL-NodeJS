@@ -48,28 +48,34 @@ class MyGroupsCenter extends Component {
         const i_owe = localStorage.getItem("i_owe");
         const they_owe = localStorage.getItem("they_owe");
         const user_id = parseInt(localStorage.getItem("user_id"));
-
-        if (i_owe.length === 0 && they_owe.length === 0) {
+        if (they_owe) {
+            localStorage.removeItem("they_owe");
+            swal(
+                "Oops!",
+                "You are owed some amount from other members. Please clear all dues and then try to leave group. Ask others to settle up.",
+                "error"
+            );
+        } else if (i_owe.length === 0) {
+            console.log("here");
             //DELETE from group
             Axios.post(`${backServer}/leavegroup`, {
                 user_id: user_id,
                 group_id: id,
             })
                 .then((response) => {
-                    swal(
-                        "Group leaved successsfully. You are no longer part of this group."
-                    );
+                    swal("Group leaved successsfully.");
+                })
+                .then(() => {
+                    window.location.reload();
                 })
                 .catch((err) => {
                     console.log("Error: ", err);
                 });
-        } else if (i_owe.length === 0) {
+        } else if (i_owe.length > 0) {
             swal(
-                "You are owed some amount from other members. Please clear all dues and then try to leave group. Ask others to settle up."
-            );
-        } else if (they_owe.length === 0) {
-            swal(
-                "You owe some amount to other members. Please clear all dues and then try to leave group. Go and settle up from your Dashboard."
+                "Oops!",
+                "You owe some amount to other members. Please clear all dues and then try to leave group. Go and settle up from your Dashboard.",
+                "error"
             );
         }
     };

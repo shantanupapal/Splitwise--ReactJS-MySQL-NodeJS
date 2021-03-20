@@ -54,21 +54,47 @@ router.post("/", (req, res) => {
                                             console.log(err);
                                         } else {
                                             console.log(result);
+                                            i_owe.forEach((ower) => {
+                                                i_owe_total =
+                                                    i_owe_total + ower[2];
+                                                console.log(
+                                                    "i_owe_total: ",
+                                                    i_owe_total
+                                                );
+                                                if (i_owe_total !== 0) {
+                                                    result.forEach((user) => {
+                                                        if (
+                                                            ower[0] ===
+                                                            user.user_id
+                                                        ) {
+                                                            ower.push(
+                                                                user.name
+                                                            );
+                                                        }
+                                                    });
+                                                }
+                                            });
 
                                             they_owe.forEach((ower) => {
                                                 they_owe_total =
                                                     they_owe_total + ower[2];
-                                                result.forEach((user) => {
-                                                    if (
-                                                        ower[0] === user.user_id
-                                                    ) {
-                                                        ower.push(user.name);
-                                                    }
-                                                });
+                                                if (they_owe_total !== 0) {
+                                                    result.forEach((user) => {
+                                                        if (
+                                                            ower[0] ===
+                                                            user.user_id
+                                                        ) {
+                                                            ower.push(
+                                                                user.name
+                                                            );
+                                                        }
+                                                    });
+                                                }
                                             });
 
                                             let dashboard_details = {
                                                 they_owe: they_owe,
+                                                i_owe: i_owe,
                                             };
 
                                             res.status(201).send(
@@ -157,28 +183,38 @@ router.post("/", (req, res) => {
                                             i_owe.forEach((ower) => {
                                                 i_owe_total =
                                                     i_owe_total + ower[2];
-                                                console.log(
-                                                    "i_owe_total: ",
-                                                    i_owe_total
-                                                );
-                                                result.forEach((user) => {
-                                                    if (
-                                                        ower[0] === user.user_id
-                                                    ) {
-                                                        ower.push(user.name);
-                                                    }
-                                                });
+                                                if (i_owe_total !== 0) {
+                                                    result.forEach((user) => {
+                                                        if (
+                                                            ower[0] ===
+                                                            user.user_id
+                                                        ) {
+                                                            ower.push(
+                                                                user.name
+                                                            );
+                                                        }
+                                                    });
+                                                }
+                                                // console.log(
+                                                //     "i_owe_total: ",
+                                                //     i_owe_total
+                                                // );
                                             });
                                             they_owe.forEach((ower) => {
                                                 they_owe_total =
                                                     they_owe_total + ower[2];
-                                                result.forEach((user) => {
-                                                    if (
-                                                        ower[0] === user.user_id
-                                                    ) {
-                                                        ower.push(user.name);
-                                                    }
-                                                });
+                                                if (they_owe_total !== 0) {
+                                                    result.forEach((user) => {
+                                                        if (
+                                                            ower[0] ===
+                                                            user.user_id
+                                                        ) {
+                                                            ower.push(
+                                                                user.name
+                                                            );
+                                                        }
+                                                    });
+                                                }
                                             });
 
                                             let dashboard_details = {
@@ -204,7 +240,7 @@ router.post("/", (req, res) => {
                 // res.status(200).send(JSON.stringify(result));
             } else {
                 const i_owe = [];
-                // const they_owe = [];
+                const they_owe = [];
                 const all = [];
                 pool.query(
                     "SELECT * FROM splitwise.one_to_one WHERE user2_id = ?",
@@ -318,7 +354,7 @@ router.post("/", (req, res) => {
 
                             if (all.length > 0) {
                                 let i_owe_total = 0;
-                                // let they_owe_total = 0;
+                                let they_owe_total = 0;
                                 pool.query(
                                     "SELECT user_id,name FROM splitwise.users WHERE user_id IN (?)",
                                     [all],
@@ -334,29 +370,40 @@ router.post("/", (req, res) => {
                                                     "i_owe_total: ",
                                                     i_owe_total
                                                 );
-                                                result.forEach((user) => {
-                                                    if (
-                                                        ower[0] === user.user_id
-                                                    ) {
-                                                        ower.push(user.name);
-                                                    }
-                                                });
+                                                if (i_owe_total !== 0) {
+                                                    result.forEach((user) => {
+                                                        if (
+                                                            ower[0] ===
+                                                            user.user_id
+                                                        ) {
+                                                            ower.push(
+                                                                user.name
+                                                            );
+                                                        }
+                                                    });
+                                                }
                                             });
-                                            // they_owe.forEach((ower) => {
-                                            //     they_owe_total =
-                                            //         they_owe_total + ower[2];
-                                            //     result.forEach((user) => {
-                                            //         if (
-                                            //             ower[0] === user.user_id
-                                            //         ) {
-                                            //             ower.push(user.name);
-                                            //         }
-                                            //     });
-                                            // });
+
+                                            they_owe.forEach((ower) => {
+                                                they_owe_total =
+                                                    they_owe_total + ower[2];
+                                                if (they_owe_total !== 0) {
+                                                    result.forEach((user) => {
+                                                        if (
+                                                            ower[0] ===
+                                                            user.user_id
+                                                        ) {
+                                                            ower.push(
+                                                                user.name
+                                                            );
+                                                        }
+                                                    });
+                                                }
+                                            });
 
                                             let dashboard_details = {
                                                 i_owe: i_owe,
-                                                // they_owe: they_owe,
+                                                they_owe: they_owe,
                                             };
 
                                             res.status(202).send(

@@ -7,7 +7,7 @@ router.post("/", (req, res) => {
     const user_id = parseInt(req.body.user_id);
     // console.log("Group_id: ", group_id);
     pool.query(
-        "DELETE FROM splitwise.groups WHERE group_id =? AND user_id = ?",
+        "DELETE FROM splitwise.groups WHERE group_id = ? AND user_id = ?",
         [group_id, user_id],
         (err, result) => {
             if (err) {
