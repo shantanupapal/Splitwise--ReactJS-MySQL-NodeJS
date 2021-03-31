@@ -6,14 +6,14 @@ const pool = require("../pool");
 router.post("/", (req, res) => {
     const email = req.body.email;
     const password = req.body.password;
-    console.log(email);
-    console.log(password);
+    // console.log(email);
+    // console.log(password);
 
     pool.query(
         "SELECT * FROM users WHERE email = ?",
         [email],
         (err, result) => {
-            console.log("Result", result);
+            // console.log("Result", result);
             if (err) {
                 res.writeHead(500, {
                     "Content-Type": "text/plain",
@@ -32,7 +32,7 @@ router.post("/", (req, res) => {
                                 httpOnly: false,
                                 path: "/",
                             });
-                            console.log("RESULT: ", result);
+                            // console.log("RESULT: ", result);
                             req.session.user = result;
                             let userDetails = {
                                 user_id: result[0].user_id,
@@ -44,7 +44,7 @@ router.post("/", (req, res) => {
                                 language: result[0].language,
                                 profilephoto: result[0].profilephoto,
                             };
-                            console.log(userDetails);
+                            // console.log(userDetails);
                             res.status(200).send(JSON.stringify(userDetails));
 
                             // res.send(result, { message: "Successful Login" });

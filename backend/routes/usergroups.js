@@ -4,7 +4,7 @@ const pool = require("../pool");
 
 router.post("/", (req, res) => {
     const user_id = req.body.user_id;
-    console.log("User_Id : " + user_id);
+    // console.log("User_Id : " + user_id);
     pool.query(
         "SELECT group_id,groupname,invitation_accepted FROM splitwise.groups WHERE user_id = ?",
         [user_id],

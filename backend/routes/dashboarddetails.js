@@ -8,8 +8,8 @@ router.post("/", (req, res) => {
     const borrowers = [];
     const payers = [];
     pool.query(
-        "SELECT * FROM splitwise.one_to_one WHERE user1_id = ?",
-        [user_id],
+        "SELECT * FROM splitwise.one_to_one WHERE user1_id = ? AND settled = ?",
+        [user_id, 0],
         (err, result1) => {
             if (err) {
                 res.writeHead(500, {
@@ -17,6 +17,7 @@ router.post("/", (req, res) => {
                 });
             }
             if (result1.length > 0) {
+                console.log("A PAYER");
                 console.log("user_payer: ", result1);
                 const i_owe = [];
                 const they_owe = [];
@@ -33,8 +34,8 @@ router.post("/", (req, res) => {
                 console.log(borrowers);
 
                 pool.query(
-                    "SELECT * FROM splitwise.one_to_one WHERE user2_id = ?",
-                    [user_id],
+                    "SELECT * FROM splitwise.one_to_one WHERE user2_id = ? AND settled = ?",
+                    [user_id, 0],
                     (err, result) => {
                         if (err) {
                             res.writeHead(500, {
@@ -42,6 +43,7 @@ router.post("/", (req, res) => {
                             });
                         }
                         if (result.length === 0) {
+                            // console.log("ALSO A BORROWER");
                             // all.push(borrowers);
                             if (all.length > 0) {
                                 let i_owe_total = 0;
@@ -108,6 +110,7 @@ router.post("/", (req, res) => {
                             }
                         }
                         if (result.length > 0) {
+                            console.log("ALSO A BORROWER");
                             console.log("user_borrower: ", result);
                             result.forEach((payer) =>
                                 payers.push([
@@ -150,24 +153,40 @@ router.post("/", (req, res) => {
                                             );
                                         }
                                         if (borrower[2] - payer[2] < 0) {
-                                            // console.log(borrower[2] - payer[2]);
+                                            console.log(
+                                                "I am Borrower : ",
+                                                borrower[2] - payer[2]
+                                            );
                                             all.push(payer[0]);
                                             i_owe.push([
                                                 payer[0],
                                                 borrower[2] - payer[2],
                                             ]);
+                                            they_owe.splice(
+                                                they_owe.indexOf(borrower) + 1,
+                                                1
+                                            );
                                         }
                                         if (borrower[2] - payer[2] > 0) {
-                                            // console.log(borrower[2] - payer[2]);
+                                            console.log(
+                                                "I am Payer: ",
+                                                borrower[2] - payer[2]
+                                            );
                                             all.push(borrower[1]);
                                             they_owe.push([
                                                 borrower[1],
                                                 borrower[2] - payer[2],
                                             ]);
+                                            i_owe.splice(
+                                                i_owe.indexOf(borrower) + 1,
+                                                1
+                                            );
                                         }
                                     }
                                 });
                             });
+                            console.log("iowe: ", i_owe);
+                            console.log("theyowe: ", they_owe);
 
                             if (all.length > 0) {
                                 let i_owe_total = 0;
@@ -243,8 +262,8 @@ router.post("/", (req, res) => {
                 const they_owe = [];
                 const all = [];
                 pool.query(
-                    "SELECT * FROM splitwise.one_to_one WHERE user2_id = ?",
-                    [user_id],
+                    "SELECT * FROM splitwise.one_to_one WHERE user2_id = ? AND settled = ?",
+                    [user_id, 0],
                     (err, result) => {
                         if (err) {
                             res.writeHead(500, {
@@ -289,6 +308,7 @@ router.post("/", (req, res) => {
                             // }
                         }
                         if (result.length > 0) {
+                            console.log("A BORROWER");
                             console.log("user_borrower: ", result);
                             result.forEach((payer) => {
                                 payers.push([

@@ -19,9 +19,9 @@ router.post("/", (req, res) => {
                 // res.send({ err: err });
             }
             if (result.length > 0) {
-                console.log("Result in getuserid", result);
+                // console.log("Result in getuserid", result);
                 let user_id = result[0].user_id;
-                console.log("USER - ID: ", user_id);
+                // console.log("USER - ID: ", user_id);
                 res.status(200).send(JSON.stringify(user_id));
             }
         }

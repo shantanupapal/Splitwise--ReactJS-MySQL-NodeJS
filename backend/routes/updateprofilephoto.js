@@ -11,7 +11,7 @@ const app = require("../app");
 
 router.post("/", upload.single("profilephoto"), function (req, res, next) {
     if (req.files) {
-        console.log("id: ", user_id_photochange);
+        // console.log("id: ", user_id_photochange);
         // const {
         //     profilephoto,
         //     body: { name },
@@ -20,12 +20,12 @@ router.post("/", upload.single("profilephoto"), function (req, res, next) {
         let filename = req.files.profilephoto.name;
         filename = user_id_photochange + ".jpg";
         user_id = parseInt(user_id_photochange);
-        console.log("int");
-        console.log(user_id);
+        // console.log("int");
+        // console.log(user_id);
 
         // user_id_photochange = "abc";
         // console.log(user_id_photochange);
-        console.log(filename);
+        // console.log(filename);
 
         profilephoto.mv("public/" + filename);
 

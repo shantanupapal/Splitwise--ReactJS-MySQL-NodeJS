@@ -255,6 +255,15 @@ const ProfilePage = () => {
                                             HUF (Ft)
                                         </option>
                                         <option value="INR (₹)">INR (₹)</option>
+                                        <option value="KWD (د.ك)">
+                                            KWD (د.ك)
+                                        </option>
+                                        <option value="BHD (.د.ب)">
+                                            BHD (.د.ب)
+                                        </option>
+                                        <option value="CAD (C$)">
+                                            CAD (C$)
+                                        </option>
                                     </select>
                                 </div>
                                 <div className="form-group-profilePage">

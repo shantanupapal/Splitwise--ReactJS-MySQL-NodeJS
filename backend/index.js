@@ -18,6 +18,7 @@ const getgroupexpenses = require("./routes/getgroupexpenses");
 const getgroupbalancedetails = require("./routes/getgroupbalancedetails");
 const settleup = require("./routes/settleup");
 const leavegroup = require("./routes/leavegroup");
+const recentactivity = require("./routes/recentactivity");
 
 app.use("/login", login);
 app.use("/signup", signup);
@@ -37,6 +38,7 @@ app.use("/getgroupexpenses", getgroupexpenses);
 app.use("/getgroupbalancedetails", getgroupbalancedetails);
 app.use("/settleup", settleup);
 app.use("/leavegroup", leavegroup);
+app.use("/recentactivity", recentactivity);
 
 app.listen(3001, () => {
     console.log("Running on 3001");

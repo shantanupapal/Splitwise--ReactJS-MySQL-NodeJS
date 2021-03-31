@@ -16,7 +16,7 @@ router.post("/", (req, res) => {
     const timezone = req.body.timezone;
     const language = req.body.language;
     const user_id = req.body.user_id;
-    console.log(req.body);
+    // console.log(req.body);
 
     pool.query(
         "UPDATE users SET name = ?, email = ?, phone = ?, currency = ?, timezone = ?,language = ? WHERE user_id = ?",

@@ -4,11 +4,12 @@ const pool = require("../pool");
 
 router.post("/", (req, res) => {
     const user_id = req.body.user_id;
+    const owers = req.body.owers;
     console.log("user to settle:", req.body);
 
     pool.query(
-        "UPDATE splitwise.one_to_one SET amount = ?, settled = ? WHERE user2_id = ? OR user1_id = ?",
-        [0, 1, user_id, user_id],
+        "UPDATE splitwise.one_to_one SET amount = ?, settled = ? WHERE user2_id = ? OR (user1_id = ? AND user2_id IN (?))",
+        [0, 1, user_id, user_id, owers],
         (err, result) => {
             if (err) {
                 console.log(err);

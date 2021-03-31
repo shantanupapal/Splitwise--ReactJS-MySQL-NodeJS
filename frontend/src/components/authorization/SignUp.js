@@ -25,6 +25,7 @@ class SignUp extends Component {
         this.props.signUp(this.state);
     };
     render() {
+        const { authError } = this.props;
         const { loggedIn } = this.props;
         const { user } = this.props;
 
@@ -87,6 +88,14 @@ class SignUp extends Component {
                                 >
                                     Sign up
                                 </button>
+                                <div>
+                                    {authError ? (
+                                        <p className="logInError">
+                                            {authError}
+                                        </p>
+                                    ) : null}
+                                    {loggedIn ? <p>LoggedIn</p> : null}
+                                </div>
                             </form>
                         </div>
                     </div>

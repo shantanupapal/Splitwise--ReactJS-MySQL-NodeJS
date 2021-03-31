@@ -7,19 +7,23 @@ import Axios from "axios";
 import backServer from "../../webConfig";
 
 class RecentActivity extends Component {
+    state = {
+        activities: [],
+    };
     componentDidMount = () => {
-        // const { loggedIn } = this.props;
-        const name = localStorage.getItem("name");
-        if (localStorage.getItem("user_id") === "undefined") {
-            Axios.post(`${backServer}/senduserid`, { name: name })
-                .then((response) => {
-                    console.log("USED- ID: ", response.data);
-                    localStorage.setItem("user_id", response.data);
-                })
-                .catch((err) => {
-                    console.log(err);
+        const user_id = localStorage.getItem("user_id");
+
+        Axios.post(`${backServer}/recentactivity`, { user_id: user_id })
+            .then((response) => {
+                console.log("Activities: ", response.data);
+                this.setState({
+                    activities: response.data,
                 });
-        }
+                // localStorage.setItem("user_id", response.data);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
     };
     render() {
         // console.log("Props");
@@ -28,98 +32,163 @@ class RecentActivity extends Component {
         if (!loggedIn) return <Redirect to="/Login" />;
         const currency = localStorage.getItem("currency").split(" ")[0];
         // console.log(currency);
+        const all_activities = this.state.activities;
+
+        const activities = all_activities.length ? (
+            all_activities.map((activity) => {
+                if (activity[5] === "payer") {
+                    return (
+                        <div>
+                            <div
+                                style={{
+                                    borderBottom: "1px solid #eee",
+                                    lineHeight: "30px",
+                                    padding: "5px",
+                                }}
+                            >
+                                <span style={{ fontWeight: "bold" }}>You</span>{" "}
+                                added{" "}
+                                <span style={{ fontWeight: "bold" }}>
+                                    {activity[2]}
+                                </span>{" "}
+                                to{" "}
+                                <span style={{ fontWeight: "bold" }}>
+                                    {activity[1]}
+                                </span>
+                                <br />
+                                <span style={{ color: "#56d4b9" }}>
+                                    You paid {currency}
+                                    {activity[3]}
+                                </span>
+                            </div>
+                        </div>
+                    );
+                } else if (activity[5] === "borrower") {
+                    return (
+                        <div>
+                            <div
+                                style={{
+                                    borderBottom: "1px solid #eee",
+                                    lineHeight: "30px",
+                                    padding: "5px",
+                                }}
+                            >
+                                <span style={{ fontWeight: "bold" }}>
+                                    {activity[6]}
+                                </span>{" "}
+                                added{" "}
+                                <span style={{ fontWeight: "bold" }}>
+                                    {activity[2]}
+                                </span>{" "}
+                                to{" "}
+                                <span style={{ fontWeight: "bold" }}>
+                                    {activity[1]}
+                                </span>
+                                <br />
+                                <span style={{ color: "#ff652f" }}>
+                                    You owe {currency}
+                                    {activity[4]}
+                                </span>
+                            </div>
+                        </div>
+                    );
+                }
+            })
+        ) : (
+            <div>No recent Activities</div>
+        );
         const name = localStorage.getItem("name");
-        let recent;
-        if (name === "Michael") {
-            recent = (
-                <div>
-                    <div
-                        style={{
-                            borderBottom: "1px solid #eee",
-                            lineHeight: "30px",
-                            padding: "5px",
-                        }}
-                    >
-                        <span style={{ fontWeight: "bold" }}>You</span> added{" "}
-                        <span style={{ fontWeight: "bold" }}>
-                            "Food Arrangements"
-                        </span>{" "}
-                        to{" "}
-                        <span style={{ fontWeight: "bold" }}>
-                            "Farewell Party"
-                        </span>
-                        <br />
-                        <span style={{ color: "#56d4b9" }}>
-                            You get {currency}6.25
-                        </span>
-                    </div>
+        // let recent;
+        // if (name === "Michael") {
+        //     recent = (
+        //         <div>
+        //             <div
+        //                 style={{
+        //                     borderBottom: "1px solid #eee",
+        //                     lineHeight: "30px",
+        //                     padding: "5px",
+        //                 }}
+        //             >
+        //                 <span style={{ fontWeight: "bold" }}>You</span> added{" "}
+        //                 <span style={{ fontWeight: "bold" }}>
+        //                     "Food Arrangements"
+        //                 </span>{" "}
+        //                 to{" "}
+        //                 <span style={{ fontWeight: "bold" }}>
+        //                     "Farewell Party"
+        //                 </span>
+        //                 <br />
+        //                 <span style={{ color: "#56d4b9" }}>
+        //                     You get {currency}6.25
+        //                 </span>
+        //             </div>
 
-                    <div
-                        style={{
-                            borderBottom: "1px solid #eee",
-                            lineHeight: "30px",
-                            padding: "5px",
-                        }}
-                    >
-                        <span style={{ fontWeight: "bold" }}>Logan Griffo</span>{" "}
-                        added{" "}
-                        <span style={{ fontWeight: "bold" }}>"Gifts"</span> to{" "}
-                        <span style={{ fontWeight: "bold" }}>
-                            "Farewell Party"
-                        </span>
-                        <br />
-                        <span style={{ color: "#ff652f" }}>
-                            You owe {currency}32.25
-                        </span>
-                    </div>
-                </div>
-            );
-        }
-        if (name === "Logan Griffo") {
-            recent = (
-                <div>
-                    <div
-                        style={{
-                            borderBottom: "1px solid #eee",
-                            lineHeight: "30px",
-                            padding: "5px",
-                        }}
-                    >
-                        <span style={{ fontWeight: "bold" }}>Michael</span>{" "}
-                        added{" "}
-                        <span style={{ fontWeight: "bold" }}>
-                            "Food Arrangements"
-                        </span>{" "}
-                        to{" "}
-                        <span style={{ fontWeight: "bold" }}>
-                            "Farewell Party"
-                        </span>
-                        <br />
-                        <span style={{ color: "#ff652f" }}>
-                            You owe {currency}6.25
-                        </span>
-                    </div>
+        //             <div
+        //                 style={{
+        //                     borderBottom: "1px solid #eee",
+        //                     lineHeight: "30px",
+        //                     padding: "5px",
+        //                 }}
+        //             >
+        //                 <span style={{ fontWeight: "bold" }}>Logan Griffo</span>{" "}
+        //                 added{" "}
+        //                 <span style={{ fontWeight: "bold" }}>"Gifts"</span> to{" "}
+        //                 <span style={{ fontWeight: "bold" }}>
+        //                     "Farewell Party"
+        //                 </span>
+        //                 <br />
+        //                 <span style={{ color: "#ff652f" }}>
+        //                     You owe {currency}32.25
+        //                 </span>
+        //             </div>
+        //         </div>
+        //     );
+        // }
+        // if (name === "Logan Griffo") {
+        //     recent = (
+        //         <div>
+        //             <div
+        //                 style={{
+        //                     borderBottom: "1px solid #eee",
+        //                     lineHeight: "30px",
+        //                     padding: "5px",
+        //                 }}
+        //             >
+        //                 <span style={{ fontWeight: "bold" }}>Michael</span>{" "}
+        //                 added{" "}
+        //                 <span style={{ fontWeight: "bold" }}>
+        //                     "Food Arrangements"
+        //                 </span>{" "}
+        //                 to{" "}
+        //                 <span style={{ fontWeight: "bold" }}>
+        //                     "Farewell Party"
+        //                 </span>
+        //                 <br />
+        //                 <span style={{ color: "#ff652f" }}>
+        //                     You owe {currency}6.25
+        //                 </span>
+        //             </div>
 
-                    <div
-                        style={{
-                            borderBottom: "1px solid #eee",
-                            lineHeight: "30px",
-                            padding: "5px",
-                        }}
-                    >
-                        <span style={{ fontWeight: "bold" }}>You</span> added{" "}
-                        <span style={{ fontWeight: "bold" }}>"Gifts"</span> to{" "}
-                        <span style={{ fontWeight: "bold" }}>
-                            "Farewell Party"
-                        </span>
-                        <br />
-                        <span style={{ color: "#56d4b9" }}>
-                            You get {currency}32.25
-                        </span>
-                    </div>
-                </div>
-            );
-        }
+        //             <div
+        //                 style={{
+        //                     borderBottom: "1px solid #eee",
+        //                     lineHeight: "30px",
+        //                     padding: "5px",
+        //                 }}
+        //             >
+        //                 <span style={{ fontWeight: "bold" }}>You</span> added{" "}
+        //                 <span style={{ fontWeight: "bold" }}>"Gifts"</span> to{" "}
+        //                 <span style={{ fontWeight: "bold" }}>
+        //                     "Farewell Party"
+        //                 </span>
+        //                 <br />
+        //                 <span style={{ color: "#56d4b9" }}>
+        //                     You get {currency}32.25
+        //                 </span>
+        //             </div>
+        //         </div>
+        //     );
+        // }
 
         return (
             <div>
@@ -137,7 +206,16 @@ class RecentActivity extends Component {
                                 marginTop: "50px",
                             }}
                         >
-                            {recent}
+                            <div className="container dashboardHeader">
+                                <div className="row align-items-center">
+                                    <div className="col-sm-6">
+                                        <h2>Recent Activity</h2>
+                                    </div>
+                                    <div className="col-sm-3"></div>
+                                    <div className="col-sm-3"></div>
+                                </div>
+                            </div>
+                            {activities}
                         </div>
                         <div className="col-xl-4"></div>
                     </div>

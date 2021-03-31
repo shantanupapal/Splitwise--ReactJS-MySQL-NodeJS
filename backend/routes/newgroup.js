@@ -3,17 +3,17 @@ const router = express.Router();
 const pool = require("../pool");
 
 router.post("/", (req, res) => {
-    console.log("NEW Group details");
-    console.log(req.body);
+    // console.log("NEW Group details");
+    // console.log(req.body);
     const members_id_to_add = req.body.members;
     const groupname = req.body.groupname;
     const creator_id = req.body.creator_id;
     let invitation_accepted = 0;
     let group_id;
 
-    console.log(typeof members_id_to_add);
-    console.log(typeof groupname);
-    console.log(typeof creator_id);
+    // console.log(typeof members_id_to_add);
+    // console.log(typeof groupname);
+    // console.log(typeof creator_id);
 
     // let all_members = members_id_to_add;
     // all_members.push(creator_id);

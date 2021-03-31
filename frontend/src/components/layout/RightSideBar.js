@@ -64,7 +64,7 @@ class RightSideBar extends Component {
                                 paddingLeft: "45px",
                             }}
                         >
-                            owes
+                            is owed
                         </span>{" "}
                         <span
                             style={{
